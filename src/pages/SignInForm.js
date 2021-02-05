@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useHistory, Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -12,18 +12,10 @@ import { login } from "../postItAPI";
 const SignInForm = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
-  // a timeoutId of 0 means no error occured
-  // const [timeoutId, setTimeoutId] = useState(0);
   const [error, setError] = useState(false);
   const history = useHistory();
 
   const { errMessageDuration } = useContext(ConfigContext);
-
-  // useEffect(() => {
-  //   if (timeoutId) {
-  //     return () => clearTimeout(timeoutId);
-  //   }
-  // }, [timeoutId]);
 
   const handleSubmit = async (event) => {
     try {
@@ -34,11 +26,7 @@ const SignInForm = () => {
       history.push("/home");
       console.log(result);
     } catch (error) {
-      // const newTimeoutId = setTimeout(() => {
-      //   setTimeoutId(0);
-      // }, errMessageDuration);
-
-      // setTimeoutId(newTimeoutId);
+      console.log(error);
       setError(true);
     }
   };
@@ -80,13 +68,6 @@ const SignInForm = () => {
           <Button type="submit" variant="contained" color="primary">
             Connexion
           </Button>
-          {/* <label
-            style={{ visibility: timeoutId ? "visible" : "hidden" }}
-            className="error-message"
-          >
-            Impossible de se connecter
-          </label> */}
-
           <Snackbar
             open={error}
             autoHideDuration={errMessageDuration}
