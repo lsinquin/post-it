@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import MailInput from "./MailInput";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <MailInput />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
