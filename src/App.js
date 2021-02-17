@@ -5,11 +5,13 @@ import {
   Redirect,
 } from "react-router-dom";
 import { createContext } from "react";
+import PrivateRoute from "./components/PrivateRoute";
 import SignInForm from "./pages/SignInForm";
 import SignUpForm from "./pages/SignUpForm";
 import ForgottenPasswordForm from "./pages/ForgottenPasswordForm";
-import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 import { NotesProvider } from "./contexts/notes/NotesContext";
+import { UserProvider } from "./contexts/user/UserContext";
 
 export const ConfigContext = createContext();
 
@@ -20,27 +22,29 @@ const configValue = {
 const App = () => {
   return (
     <ConfigContext.Provider value={configValue}>
-      <Router>
-        <Switch>
-          <Route path="/signin">
-            <SignInForm />
-          </Route>
-          <Route path="/forgottenpassword">
-            <ForgottenPasswordForm />
-          </Route>
-          <Route path="/signup">
-            <SignUpForm />
-          </Route>
-          <Route path="/home">
-            <NotesProvider>
-              <Home />
-            </NotesProvider>
-          </Route>
-          <Route path="/">
-            <Redirect to="/signin" />
-          </Route>
-        </Switch>
-      </Router>
+      <UserProvider>
+        <Router>
+          <Switch>
+            <Route path="/signin">
+              <SignInForm />
+            </Route>
+            <Route path="/forgottenpassword">
+              <ForgottenPasswordForm />
+            </Route>
+            <Route path="/signup">
+              <SignUpForm />
+            </Route>
+            <PrivateRoute path="/dashboard">
+              <NotesProvider>
+                <Dashboard />
+              </NotesProvider>
+            </PrivateRoute>
+            <Route path="/">
+              <Redirect to="/dashboard" />
+            </Route>
+          </Switch>
+        </Router>
+      </UserProvider>
     </ConfigContext.Provider>
   );
 };

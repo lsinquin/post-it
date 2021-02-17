@@ -4,30 +4,38 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Snackbar from "@material-ui/core/Snackbar";
+import Box from "@material-ui/core/Box";
 
 import Alert from "../components/Alert";
 import { ConfigContext } from "../App";
-import { login } from "../postItAPI";
+import { useUserContext } from "../contexts/user/UserContext";
+import { login } from "../utils/postItAPIWrapper";
 
 const SignInForm = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
 
   const { errMessageDuration } = useContext(ConfigContext);
+  const { setUserName, setAuthToken } = useUserContext();
+
+  const hasFailed = errorMessage !== "";
 
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
 
-      const result = await login(mail, password);
+      const {
+        data: { token },
+      } = await login(mail, password);
 
-      history.push("/home");
-      console.log(result);
+      setUserName("lsinquin51");
+      setAuthToken(token);
+
+      history.push("/dashboard");
     } catch (error) {
-      console.log(error);
-      setError(true);
+      setErrorMessage(error.message);
     }
   };
 
@@ -40,7 +48,7 @@ const SignInForm = () => {
   };
 
   const handleCloseErrorMsg = () => {
-    setError(false);
+    setErrorMessage("");
   };
 
   return (
@@ -55,6 +63,7 @@ const SignInForm = () => {
             variant="filled"
           />
           <TextField
+            type="password"
             margin="normal"
             className="input-form"
             onChange={onChangePassword}
@@ -65,16 +74,25 @@ const SignInForm = () => {
             <Link to="/signup">Créer un compte</Link>
             <Link to="/forgottenpassword">Mot de passe oublié</Link>
           </div>
-          <Button type="submit" variant="contained" color="primary">
-            Connexion
-          </Button>
+          <Box mt={1} mb={2}>
+            <Button
+              fullWidth
+              type="submit"
+              margin="normal"
+              variant="contained"
+              color="primary"
+            >
+              Connexion
+            </Button>
+          </Box>
+
           <Snackbar
-            open={error}
+            open={hasFailed}
             autoHideDuration={errMessageDuration}
             onClose={handleCloseErrorMsg}
           >
             <Alert onClose={handleCloseErrorMsg} severity="error">
-              Identifiants Incorrect
+              {errorMessage}
             </Alert>
           </Snackbar>
         </form>

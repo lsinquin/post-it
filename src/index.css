@@ -32,7 +32,7 @@ a {
 
 .form-links-container {
   margin-top: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   display: flex;
   justify-content: space-evenly;
 }
@@ -72,7 +72,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
 }
 
 .actionbar {
@@ -110,4 +110,69 @@ a {
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.note-paper {
+  margin: 16px;
+  height: 225px;
+  width: 225px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.note-title {
+  padding: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.note-content {
+  flex-grow: 2;
+  padding: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.backdrop {
+  z-index: 1 !important;
+}
+
+.modal-container {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 400px;
+  width: 400px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.modal-action-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.hidden-input {
+  margin: 0;
+  border: 0;
+}
+
+.hidden-textarea {
+  border: 0;
+  resize: none;
 }

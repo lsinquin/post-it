@@ -12,13 +12,24 @@ export const useNotesContext = () => {
 };
 
 export const NotesProvider = ({ children }) => {
-  const { isLoading, notes, deleteNotes, addNote } = useNotesDataManager();
+  const {
+    isLoading,
+    notes,
+    selectedNote,
+    addNote,
+    updateNote,
+    removeNote,
+    setSelectedNote,
+  } = useNotesDataManager();
 
   const provider = {
     isLoading,
     notes,
-    deleteNotes,
+    selectedNote,
     addNote,
+    updateNote,
+    removeNote,
+    setSelectedNote,
   };
 
   return (

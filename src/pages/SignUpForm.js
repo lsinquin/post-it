@@ -1,40 +1,34 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useHistory, Link } from "react-router-dom";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import Snackbar from "@material-ui/core/Snackbar";
+import Box from "@material-ui/core/Box";
+
+import Alert from "../components/Alert";
 import { ConfigContext } from "../App";
-import MailInput from "../components/MailInput";
-import PasswordInput from "../components/PasswordInput";
-import { signUp } from "../postItAPI";
+import { signUp } from "../utils/postItAPIWrapper";
 
 const SignUpForm = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
-  // a timeoutId of 0 means no error occured
-  const [timeoutId, setTimeoutId] = useState(0);
-
+  const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
 
   const { errMessageDuration } = useContext(ConfigContext);
 
-  useEffect(() => {
-    if (timeoutId) {
-      return () => clearTimeout(timeoutId);
-    }
-  }, [timeoutId]);
+  const hasFailed = errorMessage !== "";
 
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
 
-      const result = await signUp(mail, password);
+      await signUp(mail, password);
 
       history.push("/signin");
-      console.log(result);
     } catch (error) {
-      const newTimeoutId = setTimeout(() => {
-        setTimeoutId(0);
-      }, errMessageDuration);
-
-      setTimeoutId(newTimeoutId);
+      setErrorMessage(error.message);
     }
   };
 
@@ -46,23 +40,55 @@ const SignUpForm = () => {
     setPassword(event.target.value);
   };
 
+  const handleCloseErrorMsg = () => {
+    setErrorMessage("");
+  };
+
   return (
     <div className="container">
-      <form className="form-connection" onSubmit={handleSubmit}>
-        <MailInput onChange={onChangeMail} />
-        <PasswordInput onChange={onChangePassword} />
-        <div className="form-links-container">
-          <Link to="/signin">J'ai déjà un compte</Link>
-        </div>
+      <Paper elevation={6} className="paper-form">
+        <form className="form-connection" onSubmit={handleSubmit}>
+          <TextField
+            margin="normal"
+            className="input-form"
+            onChange={onChangeMail}
+            label="Adresse mail"
+            variant="filled"
+          />
+          <TextField
+            type="password"
+            margin="normal"
+            className="input-form"
+            onChange={onChangePassword}
+            label="Mot de passe"
+            variant="filled"
+          />
+          <div className="form-links-container">
+            <Link to="/signin">J'ai déjà un compte</Link>
+          </div>
+          <Box mt={1} mb={2}>
+            <Button
+              fullWidth
+              type="submit"
+              margin="normal"
+              variant="contained"
+              color="primary"
+            >
+              Créer un compte
+            </Button>
+          </Box>
 
-        <button className="form-button">Sign Up</button>
-        <label
-          style={{ visibility: timeoutId ? "visible" : "hidden" }}
-          className="error-message"
-        >
-          Impossible de créer un compte
-        </label>
-      </form>
+          <Snackbar
+            open={hasFailed}
+            autoHideDuration={errMessageDuration}
+            onClose={handleCloseErrorMsg}
+          >
+            <Alert onClose={handleCloseErrorMsg} severity="error">
+              {errorMessage}
+            </Alert>
+          </Snackbar>
+        </form>
+      </Paper>
     </div>
   );
 };
