@@ -25,11 +25,17 @@ function useUserDataManager() {
     }
   }, [authToken]);
 
+  const logOut = () => {
+    setUserName(null);
+    setAuthToken(null);
+  };
+
   return {
     userName,
     authToken,
     setUserName,
     setAuthToken,
+    logOut,
   };
 }
 

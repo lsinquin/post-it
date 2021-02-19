@@ -1,9 +1,11 @@
 import Note from "./Note";
+import { useNotesContext } from "../contexts/notes/NotesContext";
 
-const NotesDisplay = (props) => {
+const NotesDisplay = () => {
+  const { notes } = useNotesContext();
   return (
     <div className="notes-display">
-      {props.notes.map((note) => {
+      {notes.map((note) => {
         return <Note key={note.id} note={note} />;
       })}
     </div>

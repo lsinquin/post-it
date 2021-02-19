@@ -6,13 +6,8 @@ import { useUserContext } from "../contexts/user/UserContext";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
 const Header = () => {
-  const { userName, setUserName, setAuthToken } = useUserContext();
+  const { userName, logOut } = useUserContext();
   const { addNote } = useNotesContext();
-
-  const handleLogOut = () => {
-    setUserName(null);
-    setAuthToken(null);
-  };
 
   const handleAddNote = () => {
     addNote("Title", "Content");
@@ -26,7 +21,7 @@ const Header = () => {
         </div>
         <div className="userinfo">
           <label>{userName || "placeholder"}</label>
-          <ExitToAppIcon onClick={handleLogOut} fontSize="large" />
+          <ExitToAppIcon onClick={logOut} fontSize="large" />
         </div>
       </div>
       <Divider />

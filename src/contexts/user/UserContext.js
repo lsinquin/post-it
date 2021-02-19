@@ -17,6 +17,7 @@ export const UserProvider = ({ children }) => {
     authToken,
     setUserName,
     setAuthToken,
+    logOut,
   } = useUserDataManager();
 
   const provider = {
@@ -24,6 +25,7 @@ export const UserProvider = ({ children }) => {
     authToken,
     setUserName,
     setAuthToken,
+    logOut,
   };
 
   return (

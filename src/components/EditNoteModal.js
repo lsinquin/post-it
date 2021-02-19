@@ -5,7 +5,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useState, useEffect } from "react";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
-//Todo mettre en place des inputs controlés
 const EditNoteModal = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -32,6 +31,7 @@ const EditNoteModal = () => {
   const onChangeContent = (event) => {
     setContent(event.target.value);
   };
+
   const handleClose = () => {
     updateNote({ ...selectedNote, title, content });
     setSelectedNote(null);
@@ -46,12 +46,12 @@ const EditNoteModal = () => {
     <Modal open={showModal} onClose={handleClose}>
       <div className="modal-container">
         <input
-          defaultValue={selectedNote ? selectedNote.title : ""}
+          value={title}
           className="note-title hidden-input"
           onChange={onChangeTitle}
         />
         <textarea
-          defaultValue={selectedNote ? selectedNote.content : ""}
+          value={content}
           className="note-content hidden-textarea"
           onChange={onChangeContent}
         />

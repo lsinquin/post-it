@@ -1,4 +1,4 @@
-import Paper from "@material-ui/core/Paper";
+import Card from "@material-ui/core/Card";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
 const Note = (props) => {
@@ -8,12 +8,11 @@ const Note = (props) => {
   };
 
   return (
-    <Paper onClick={handleClick} className="note-paper" elevation={3}>
+    //elevation 3
+    <Card variant="outlined" onClick={handleClick} className="note-paper">
       <label className="note-title">{props.note.title || "Placeholder"}</label>
-      <label className="note-content">
-        {props.note.content || "Placeholder"}
-      </label>
-    </Paper>
+      <p className="note-content">{props.note.content || "Placeholder"}</p>
+    </Card>
   );
 };
 

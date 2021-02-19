@@ -1,5 +1,6 @@
 import axios from "axios";
 import APIError from "./APIError";
+import AuthError from "./AuthError";
 import { resolveErrorId } from "./errMessages";
 
 const baseUrl = "http://localhost:5000/api";
@@ -13,7 +14,13 @@ const sendRequest = (axiosConfig, isSecured) => {
   }
 
   return axios(config).catch((error) => {
-    throw new APIError(resolveErrorId(error.response.data.errorId));
+    const statusCode = error.response ? error.response.status : 500;
+    switch (statusCode) {
+      case 401:
+        throw new AuthError("Problème d'authentification");
+      default:
+        throw new APIError(resolveErrorId(error.response.data.errorId));
+    }
   });
 };
 
@@ -70,46 +77,3 @@ const deleteNote = (id) =>
   );
 
 export { login, signUp, getNotes, postNewNote, modifyNote, deleteNote };
-
-// const sendRequest = (axiosConfig) => {
-//   return axios(axiosConfig).catch((error) => {
-//     throw new APIError(resolveErrorId(error.response.data.errorId));
-//   });
-// };
-
-// const login = (mail, password) =>
-//   sendRequest({
-//     method: "post",
-//     url: "/signin",
-//     data: { mail, password },
-//   });
-
-// const signUp = (mail, password) =>
-//   sendRequest({
-//     method: "post",
-//     url: "/signup",
-//     data: { mail, password },
-//   });
-
-// const getNotes = (authToken) =>
-//   sendRequest({
-//     method: "get",
-//     url: "/notes",
-//     headers: { Authorization: authToken },
-//   });
-
-// const postNewNote = (title, content, authToken) =>
-//   sendRequest({
-//     method: "post",
-//     url: "/notes",
-//     data: { title, content },
-//     headers: { Authorization: authToken },
-//   });
-
-// const modifyNote = (id, title, content, authToken) =>
-//   sendRequest({
-//     method: "put",
-//     url: `/notes/${id}`,
-//     data: { title, content },
-//     headers: { Authorization: authToken },
-//   });
