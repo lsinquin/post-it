@@ -1,31 +1,30 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Card";
-import Snackbar from "@material-ui/core/Snackbar";
-import Box from "@material-ui/core/Box";
-
-import Alert from "../components/Alert";
-import { ConfigContext } from "../App";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import logo from "../logo_cropped.png";
+// import { ConfigContext } from "../App";
 import { useUserContext } from "../contexts/user/UserContext";
 import { login } from "../utils/postItAPIWrapper";
 
 const SignInForm = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
 
-  const { errMessageDuration } = useContext(ConfigContext);
+  // const { errMessageDuration } = useContext(ConfigContext);
   const { setUserName, setAuthToken } = useUserContext();
 
-  const hasFailed = errorMessage !== "";
+  // const hasFailed = errorMessage !== "";
 
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-
       const {
         data: { token },
       } = await login(mail, password);
@@ -35,7 +34,8 @@ const SignInForm = () => {
 
       history.push("/dashboard");
     } catch (error) {
-      setErrorMessage(error.message);
+      console.log(error);
+      // setErrorMessage(error.message);
     }
   };
 
@@ -47,55 +47,63 @@ const SignInForm = () => {
     setPassword(event.target.value);
   };
 
-  const handleCloseErrorMsg = () => {
-    setErrorMessage("");
-  };
+  // const handleCloseErrorMsg = () => {
+  //   setErrorMessage("");
+  // };
 
   return (
-    <div className="container">
-      <Paper variant="outlined" className="paper-form">
-        <form className="form-connection" onSubmit={handleSubmit}>
-          <TextField
-            margin="normal"
-            className="input-form"
-            onChange={onChangeMail}
-            label="Adresse mail"
-          />
-          <TextField
-            type="password"
-            margin="normal"
-            className="input-form"
-            onChange={onChangePassword}
-            label="Mot de passe"
-          />
-          <div className="form-links-container">
-            <Link to="/signup">Créer un compte</Link>
-            <Link to="/forgottenpassword">Mot de passe oublié</Link>
-          </div>
-          <Box mt={1} mb={2}>
-            <Button
-              fullWidth
-              type="submit"
-              margin="normal"
-              variant="contained"
-              color="primary"
-            >
-              Connexion
-            </Button>
-          </Box>
+    <Container fluid className="form-background h-100">
+      <Row className="justify-content-center align-items-center h-100">
+        <Col lg={4}>
+          <img
+            className="mx-auto d-block mb-4"
+            src={logo}
+            width="300"
+            height="80"
+            alt="logo"
+          ></img>
+          <Card body>
+            <h3 className="text-center mb-4">Connexion</h3>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formEmail">
+                <Form.Label>Adresse email</Form.Label>
+                <Form.Control
+                  onChange={onChangeMail}
+                  type="email"
+                  placeholder="Saisissez votre adresse email"
+                />
+              </Form.Group>
 
-          <Snackbar
-            open={hasFailed}
-            autoHideDuration={errMessageDuration}
-            onClose={handleCloseErrorMsg}
-          >
-            <Alert onClose={handleCloseErrorMsg} severity="error">
-              {errorMessage}
-            </Alert>
-          </Snackbar>
-        </form>
-      </Paper>
-    </div>
+              <Form.Group controlId="formPassword">
+                <Form.Label>Mot de passe</Form.Label>
+                <Form.Control
+                  onChange={onChangePassword}
+                  type="password"
+                  placeholder="Saisissez votre mot de passe"
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formLinks">
+                <Container>
+                  <Row>
+                    <Col xs={12} lg={6} className="text-center">
+                      <Link to="/signup">Créer un compte</Link>
+                    </Col>
+                    <Col xs={12} lg={6} className="text-center">
+                      <Link to="/forgottenpassword">Mot de passe oublié</Link>
+                    </Col>
+                  </Row>
+                </Container>
+              </Form.Group>
+
+              <Button className="btn-block" variant="primary" type="submit">
+                Se connecter
+              </Button>
+            </Form>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

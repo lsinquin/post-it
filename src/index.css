@@ -19,34 +19,18 @@ code {
     monospace;
 }
 
-button,
-input {
-  margin: 5px;
-  font-family: inherit;
-  font-size: inherit;
-}
-
-a {
-  padding: 0px 5px;
-}
-
-.form-links-container {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.container {
-  height: 100%;
-  display: flex;
-  background-color: #ffffff;
+.form-background {
+  background-color: #a3c564;
 }
 
 .paper-form {
-  width: 350px;
+  width: 450px;
   margin: auto;
   padding: 16px;
+}
+
+.form-card {
+  max-width: 450px;
 }
 
 .input-form {

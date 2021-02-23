@@ -1,73 +1,76 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import Snackbar from "@material-ui/core/Snackbar";
-import Box from "@material-ui/core/Box";
-
-import Alert from "../components/Alert";
-import { ConfigContext } from "../App";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import logo from "../logo_cropped.png";
+// import { ConfigContext } from "../App";
 
 const ForgottenPassword = () => {
   const [mail, setMail] = useState("");
-  const [hasError, setHasError] = useState(false);
+  // const [hasError, setHasError] = useState(false);
   // const history = useHistory();
 
-  const { errMessageDuration } = useContext(ConfigContext);
+  // const { errMessageDuration } = useContext(ConfigContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(mail);
-    setHasError(true);
+    // setHasError(true);
   };
 
   const onChangeMail = (event) => {
     setMail(event.target.value);
   };
 
-  const handleCloseMsg = () => {
-    setHasError(false);
-  };
+  // const handleCloseMsg = () => {
+  //   setHasError(false);
+  // };
 
   return (
-    <div className="container">
-      <Paper elevation={6} className="paper-form">
-        <form className="form-connection" onSubmit={handleSubmit}>
-          <TextField
-            margin="normal"
-            className="input-form"
-            onChange={onChangeMail}
-            label="Adresse mail"
-            variant="filled"
-          />
-          <div className="form-links-container">
-            <Link to="/signin">Se connecter</Link>
-          </div>
-          <Box mt={1} mb={2}>
-            <Button
-              fullWidth
-              type="submit"
-              margin="normal"
-              variant="contained"
-              color="primary"
-            >
-              Réinitialiser mot de passe
-            </Button>
-          </Box>
+    <Container fluid className="form-background h-100">
+      <Row className="justify-content-center align-items-center h-100">
+        <Col lg={4}>
+          <img
+            className="mx-auto d-block mb-4"
+            src={logo}
+            width="300"
+            height="80"
+            alt="logo"
+          ></img>
+          <Card body>
+            <h3 className="text-center mb-4">Mot de passe oublié</h3>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formEmail">
+                <Form.Label>Adresse email</Form.Label>
+                <Form.Control
+                  onChange={onChangeMail}
+                  type="email"
+                  placeholder="Saisissez votre adresse email"
+                />
+              </Form.Group>
 
-          <Snackbar
-            open={hasError}
-            autoHideDuration={errMessageDuration}
-            onClose={handleCloseMsg}
-          >
-            <Alert onClose={handleCloseMsg} severity="success">
-              Mail Envoyé (pas encore)
-            </Alert>
-          </Snackbar>
-        </form>
-      </Paper>
-    </div>
+              <Form.Group controlId="formLinks">
+                <Container>
+                  <Row>
+                    <Col className="text-center">
+                      <Link to="/signin">Se connecter</Link>
+                    </Col>
+                  </Row>
+                </Container>
+              </Form.Group>
+
+              <Button className="btn-block" variant="primary" type="submit">
+                Réinitialiser le mot de passe
+              </Button>
+            </Form>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
