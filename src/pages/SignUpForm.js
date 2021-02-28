@@ -6,30 +6,33 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import Spinner from "react-bootstrap/Spinner";
 import logo from "../logo_cropped.png";
-// import { ConfigContext } from "../App";
+import timeout from "../utils/timeout";
 import { signUp } from "../utils/postItAPIWrapper";
 
 const SignUpForm = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
-  // const [errorMessage, setErrorMessage] = useState("");
+  const [isRequesting, setIsRequesting] = useState(false);
+
   const history = useHistory();
-
-  // const { errMessageDuration } = useContext(ConfigContext);
-
-  // const hasFailed = errorMessage !== "";
 
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
+      setIsRequesting(true);
+
+      await timeout(5000);
 
       await signUp(mail, password);
 
       history.push("/signin");
+
+      setIsRequesting(false);
     } catch (error) {
       console.log(error);
-      // setErrorMessage(error.message);
+      setIsRequesting(false);
     }
   };
 
@@ -40,10 +43,6 @@ const SignUpForm = () => {
   const onChangePassword = (event) => {
     setPassword(event.target.value);
   };
-
-  // const handleCloseErrorMsg = () => {
-  //   setErrorMessage("");
-  // };
 
   return (
     <Container fluid className="form-background h-100">
@@ -77,19 +76,28 @@ const SignUpForm = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formLinks">
-                <Container>
-                  <Row>
-                    <Col className="text-center">
-                      <Link to="/signin">J'ai déjà un compte</Link>
-                    </Col>
-                  </Row>
-                </Container>
-              </Form.Group>
-
-              <Button className="btn-block" variant="primary" type="submit">
-                Créer un compte
+              <Button
+                className="btn-block"
+                variant="primary"
+                type="submit"
+                disabled={isRequesting}
+              >
+                {isRequesting ? (
+                  <Spinner as="span" size="sm" animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                ) : (
+                  "Créer un compte"
+                )}
               </Button>
+
+              <Container className="mt-2 mb-0">
+                <Row>
+                  <Col className="text-center">
+                    <Link to="/signin">J'ai déjà un compte</Link>
+                  </Col>
+                </Row>
+              </Container>
             </Form>
           </Card>
         </Col>

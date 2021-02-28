@@ -1,17 +1,46 @@
-import Card from "@material-ui/core/Card";
+import { useState } from "react";
+import Card from "react-bootstrap/Card";
+import { FaTrash } from "react-icons/fa";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
 const Note = (props) => {
-  const { setSelectedNote } = useNotesContext();
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
+  const { setSelectedNote, removeNote } = useNotesContext();
   const handleClick = (event) => {
     setSelectedNote(props.note);
   };
 
+  const handleDelete = (event) => {
+    event.stopPropagation();
+    console.log("deleting...");
+    removeNote(props.note);
+  };
+
+  const handleShowFloatingButton = () => setShowDeleteButton(true);
+  const handleUnshowFloatingButton = () => setShowDeleteButton(false);
+
   return (
-    //elevation 3
-    <Card variant="outlined" onClick={handleClick} className="note-paper">
-      <label className="note-title">{props.note.title || "Placeholder"}</label>
-      <p className="note-content">{props.note.content || "Placeholder"}</p>
+    <Card
+      className="note w-100"
+      onClick={handleClick}
+      onMouseEnter={handleShowFloatingButton}
+      onMouseLeave={handleUnshowFloatingButton}
+    >
+      <Card.Body>
+        {showDeleteButton ? (
+          <FaTrash
+            onClick={handleDelete}
+            className="float-right text-danger"
+            size={16}
+          />
+        ) : null}
+        <Card.Title className="text-truncate">
+          {props.note.title || ""}
+        </Card.Title>
+        <Card.Text className="note-content text-multi-wrap">
+          {props.note.content || ""}
+        </Card.Text>
+      </Card.Body>
     </Card>
   );
 };

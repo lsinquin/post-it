@@ -6,29 +6,29 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import Spinner from "react-bootstrap/Spinner";
 import logo from "../logo_cropped.png";
+import timeout from "../utils/timeout";
 // import { ConfigContext } from "../App";
 
 const ForgottenPassword = () => {
   const [mail, setMail] = useState("");
-  // const [hasError, setHasError] = useState(false);
-  // const history = useHistory();
-
-  // const { errMessageDuration } = useContext(ConfigContext);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsRequesting(true);
+
+    await timeout(5000);
+
+    setIsRequesting(false);
+
     console.log(mail);
-    // setHasError(true);
   };
 
   const onChangeMail = (event) => {
     setMail(event.target.value);
   };
-
-  // const handleCloseMsg = () => {
-  //   setHasError(false);
-  // };
 
   return (
     <Container fluid className="form-background h-100">
@@ -53,19 +53,28 @@ const ForgottenPassword = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formLinks">
-                <Container>
-                  <Row>
-                    <Col className="text-center">
-                      <Link to="/signin">Se connecter</Link>
-                    </Col>
-                  </Row>
-                </Container>
-              </Form.Group>
-
-              <Button className="btn-block" variant="primary" type="submit">
-                Réinitialiser le mot de passe
+              <Button
+                className="btn-block"
+                variant="primary"
+                type="submit"
+                disabled={isRequesting}
+              >
+                {isRequesting ? (
+                  <Spinner as="span" size="sm" animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                ) : (
+                  "Réinitialiser le mot de passe"
+                )}
               </Button>
+
+              <Container className="mt-2 mb-0">
+                <Row>
+                  <Col className="text-center">
+                    <Link to="/signin">Se connecter</Link>
+                  </Col>
+                </Row>
+              </Container>
             </Form>
           </Card>
         </Col>

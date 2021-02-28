@@ -6,7 +6,9 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import Spinner from "react-bootstrap/Spinner";
 import logo from "../logo_cropped.png";
+import timeout from "../utils/timeout";
 // import { ConfigContext } from "../App";
 import { useUserContext } from "../contexts/user/UserContext";
 import { login } from "../utils/postItAPIWrapper";
@@ -14,6 +16,7 @@ import { login } from "../utils/postItAPIWrapper";
 const SignInForm = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
+  const [isRequesting, setIsRequesting] = useState(false);
   // const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
 
@@ -25,16 +28,23 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
+      setIsRequesting(true);
+
+      await timeout(5000);
+
       const {
         data: { token },
       } = await login(mail, password);
 
-      setUserName("lsinquin51");
+      setUserName("lsinquin");
       setAuthToken(token);
 
       history.push("/dashboard");
+
+      setIsRequesting(false);
     } catch (error) {
       console.log(error);
+      setIsRequesting(false);
       // setErrorMessage(error.message);
     }
   };
@@ -83,22 +93,31 @@ const SignInForm = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formLinks">
-                <Container>
-                  <Row>
-                    <Col xs={12} lg={6} className="text-center">
-                      <Link to="/signup">Créer un compte</Link>
-                    </Col>
-                    <Col xs={12} lg={6} className="text-center">
-                      <Link to="/forgottenpassword">Mot de passe oublié</Link>
-                    </Col>
-                  </Row>
-                </Container>
-              </Form.Group>
-
-              <Button className="btn-block" variant="primary" type="submit">
-                Se connecter
+              <Button
+                className="btn-block"
+                variant="primary"
+                type="submit"
+                disabled={isRequesting}
+              >
+                {isRequesting ? (
+                  <Spinner as="span" size="sm" animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                ) : (
+                  "Se connecter"
+                )}
               </Button>
+
+              <Container className="mt-2 mb-0">
+                <Row>
+                  <Col xs={12} lg={6} className="text-center ">
+                    <Link to="/signup">Créer un compte</Link>
+                  </Col>
+                  <Col xs={12} lg={6} className="text-center">
+                    <Link to="/forgottenpassword">Mot de passe oublié</Link>
+                  </Col>
+                </Row>
+              </Container>
             </Form>
           </Card>
         </Col>
