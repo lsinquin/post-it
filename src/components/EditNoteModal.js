@@ -54,9 +54,6 @@ const EditNoteModal = () => {
 
   return (
     <Modal show={showModal} onHide={handleUpdate}>
-      {/* <Modal.Header closeButton>
-        <Modal.Title>Modifier Post-It</Modal.Title>
-      </Modal.Header> */}
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formTitle">
@@ -84,29 +81,6 @@ const EditNoteModal = () => {
         </Form>
       </Modal.Body>
     </Modal>
-    // <Modal open={showModal} onClose={handleClose}>
-    //   <div className="modal-container">
-    //     <input
-    //       value={title}
-    //       className="note-title hidden-input"
-    //       onChange={onChangeTitle}
-    //     />
-    //     <textarea
-    //       value={content}
-    //       className="note-content hidden-textarea"
-    //       onChange={onChangeContent}
-    //     />
-    //     {/* <label className="note-content"></label> */}
-    //     <div className="modal-action-bar">
-    //       <IconButton onClick={handleDelete} color="secondary">
-    //         <DeleteIcon />
-    //       </IconButton>
-    //       <IconButton onClick={handleClose} color="primary">
-    //         <CheckIcon />
-    //       </IconButton>
-    //     </div>
-    //   </div>
-    // </Modal>
   );
 };
 

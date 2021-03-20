@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useUserContext } from "../user/UserContext";
 import {
   getNotes,
   postNewNote,
@@ -8,102 +7,98 @@ import {
 } from "../../utils/postItAPIWrapper";
 
 function useNotesDataManager() {
-  const { logOut } = useUserContext();
-  const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState(null);
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasErrored, setHasErrored] = useState(false);
+  const [requestCounter, setRequestCounter] = useState(0);
+
+  const incrementCounter = (prevValue) => prevValue + 1;
+  const decrementCounter = (prevValue) => prevValue - 1;
 
   useEffect(() => {
-    console.log("fetching notes...");
-    const fetchNotes = async () => {
+    (async function () {
       try {
-        console.log("fetching");
-
         const { data: notes } = await getNotes();
 
         setNotes(notes);
         setIsLoading(false);
       } catch (error) {
+        console.log(error);
         setIsLoading(false);
-        logOut();
+        setHasErrored(true);
       }
-    };
-
-    fetchNotes();
-  }, [logOut]); // ???
+    })();
+  }, []); // ???
 
   const addNote = (title, content) => {
-    const postNote = async function () {
+    (async function () {
       try {
-        setIsLoading(true);
+        setRequestCounter(incrementCounter);
+
         const { data: note } = await postNewNote(title, content);
 
         setNotes([
           ...notes,
           { id: note.id, title: note.title, content: note.content },
         ]);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        logOut();
-      }
-    };
 
-    postNote();
+        setRequestCounter(decrementCounter);
+      } catch (error) {
+        console.log(error);
+        setHasErrored(true);
+      }
+    })();
   };
 
   const updateNote = (noteRec) => {
-    const putNote = async function () {
+    (async function () {
       try {
-        setIsLoading(true);
-        const { data: note } = await modifyNote(
-          noteRec.id,
-          noteRec.title,
-          noteRec.content
-        );
+        setRequestCounter(incrementCounter);
 
         const newNotes = notes.map((item, index) => {
-          if (item.id === note.id) {
-            return note;
+          if (item.id === noteRec.id) {
+            return noteRec;
           }
           return item;
         });
 
         setNotes(newNotes);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        logOut();
-      }
-    };
 
-    putNote();
+        await modifyNote(noteRec.id, noteRec.title, noteRec.content);
+
+        setRequestCounter(decrementCounter);
+      } catch (error) {
+        console.log(error);
+        setHasErrored(true);
+      }
+    })();
   };
 
   const removeNote = (noteRec) => {
-    const asyncRemoveNote = async function () {
+    (async function () {
       try {
-        setIsLoading(true);
+        setRequestCounter(incrementCounter);
+
+        const newNotes = notes.filter((item, _) => item.id !== noteRec.id);
+        setNotes(newNotes);
+
         await deleteNote(noteRec.id);
 
-        const newNotes = notes.filter((item, index) => item.id !== noteRec.id);
-
-        setNotes(newNotes);
-        setIsLoading(false);
+        setRequestCounter(decrementCounter);
       } catch (error) {
-        setIsLoading(false);
-        logOut();
+        console.log(error);
+        setHasErrored(true);
       }
-    };
-
-    asyncRemoveNote();
+    })();
   };
 
   return {
-    isLoading,
     notes,
     selectedNote,
+    isLoading,
+    hasErrored,
+    requestCounter,
     addNote,
     updateNote,
     removeNote,

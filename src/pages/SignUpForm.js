@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -8,32 +8,31 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 import logo from "../logo_cropped.png";
-import timeout from "../utils/timeout";
-import { signUp } from "../utils/postItAPIWrapper";
+import { useFormContext } from "../contexts/form/FormContext";
 
 const SignUpForm = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
-  const [isRequesting, setIsRequesting] = useState(false);
+  const {
+    isRequesting,
+    error,
+    errorMessage,
+    accountCreated,
+    signUp,
+  } = useFormContext();
 
   const history = useHistory();
 
-  const handleSubmit = async (event) => {
-    try {
-      event.preventDefault();
-      setIsRequesting(true);
-
-      await timeout(5000);
-
-      await signUp(mail, password);
-
+  useEffect(() => {
+    if (accountCreated) {
       history.push("/signin");
-
-      setIsRequesting(false);
-    } catch (error) {
-      console.log(error);
-      setIsRequesting(false);
     }
+  }, [accountCreated, history]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    signUp(mail, password);
   };
 
   const onChangeMail = (event) => {
@@ -65,6 +64,11 @@ const SignUpForm = () => {
                   type="email"
                   placeholder="Saisissez votre adresse email"
                 />
+                {error === "err_existing_user" ? (
+                  <Form.Text id="passwordHelpBlock" className="text-danger">
+                    {errorMessage}
+                  </Form.Text>
+                ) : null}
               </Form.Group>
 
               <Form.Group controlId="formPassword">
@@ -74,6 +78,11 @@ const SignUpForm = () => {
                   type="password"
                   placeholder="Saisissez votre mot de passe"
                 />
+                {error === "err_invalid_password" ? (
+                  <Form.Text id="passwordHelpBlock" className="text-danger">
+                    {errorMessage}
+                  </Form.Text>
+                ) : null}
               </Form.Group>
 
               <Button

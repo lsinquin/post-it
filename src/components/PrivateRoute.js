@@ -1,16 +1,14 @@
 import { Route, Redirect } from "react-router-dom";
-import { useUserContext } from "../contexts/user/UserContext";
+import { useAuthContext } from "../contexts/auth/AuthContext";
 
 // A wrapping component to redirect user to the signin page if they are not authentified
 const PrivateRoute = ({ children, ...rest }) => {
-  let { userName, authToken } = useUserContext();
+  let { authToken } = useAuthContext();
 
   return (
     <Route
       {...rest}
-      render={() =>
-        userName && authToken ? children : <Redirect to="/signin" />
-      }
+      render={() => (authToken ? children : <Redirect to="/signin" />)}
     />
   );
 };
