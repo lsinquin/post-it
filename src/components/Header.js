@@ -13,7 +13,7 @@ const Header = () => {
   const { requestCounter, addNote } = useNotesContext();
 
   const handleAddNote = () => {
-    addNote("Title", "Content");
+    addNote("", "");
   };
 
   return (
