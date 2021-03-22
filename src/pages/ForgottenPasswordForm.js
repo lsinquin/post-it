@@ -6,22 +6,13 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import Spinner from "react-bootstrap/Spinner";
 import logo from "../logo_cropped.png";
-import timeout from "../utils/timeout";
-// import { ConfigContext } from "../App";
 
 const ForgottenPassword = () => {
   const [mail, setMail] = useState("");
-  const [isRequesting, setIsRequesting] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsRequesting(true);
-
-    await timeout(5000);
-
-    setIsRequesting(false);
 
     console.log(mail);
   };
@@ -57,15 +48,9 @@ const ForgottenPassword = () => {
                 className="btn-block"
                 variant="primary"
                 type="submit"
-                disabled={isRequesting}
+                disabled
               >
-                {isRequesting ? (
-                  <Spinner as="span" size="sm" animation="border" role="status">
-                    <span className="sr-only">Loading...</span>
-                  </Spinner>
-                ) : (
-                  "Réinitialiser le mot de passe"
-                )}
+                Réinitialiser le mot de passe
               </Button>
 
               <Container className="mt-2 mb-0">

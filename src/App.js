@@ -12,8 +12,6 @@ import SignUpForm from "./pages/SignUpForm";
 import ForgottenPasswordForm from "./pages/ForgottenPasswordForm";
 import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./contexts/auth/AuthContext";
-import { NotesProvider } from "./contexts/notes/NotesContext";
-import { FormProvider } from "./contexts/form/FormContext";
 
 export const ConfigContext = createContext();
 
@@ -25,29 +23,25 @@ const App = () => {
   return (
     <ConfigContext.Provider value={configValue}>
       <AuthProvider>
-        <FormProvider>
-          <Router>
-            <Switch>
-              <Route path="/signin">
-                <SignInForm />
-              </Route>
-              <Route path="/forgottenpassword">
-                <ForgottenPasswordForm />
-              </Route>
-              <Route path="/signup">
-                <SignUpForm />
-              </Route>
-              <PrivateRoute path="/dashboard">
-                <NotesProvider>
-                  <Dashboard />
-                </NotesProvider>
-              </PrivateRoute>
-              <Route path="/">
-                <Redirect to="/dashboard" />
-              </Route>
-            </Switch>
-          </Router>
-        </FormProvider>
+        <Router>
+          <Switch>
+            <Route path="/signin">
+              <SignInForm />
+            </Route>
+            <Route path="/forgottenpassword">
+              <ForgottenPasswordForm />
+            </Route>
+            <Route path="/signup">
+              <SignUpForm />
+            </Route>
+            <PrivateRoute path="/dashboard">
+              <Dashboard />
+            </PrivateRoute>
+            <Route path="/">
+              <Redirect to="/dashboard" />
+            </Route>
+          </Switch>
+        </Router>
       </AuthProvider>
     </ConfigContext.Provider>
   );

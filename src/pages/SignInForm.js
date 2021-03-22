@@ -1,46 +1,30 @@
-import { useState, useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useState } from "react";
+import { Redirect, Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 import logo from "../logo_cropped.png";
-import { useFormContext } from "../contexts/form/FormContext";
-import { useAuthContext } from "../contexts/auth/AuthContext";
+import useSignIn from "../customHooks/useSignIn";
 
 const SignInForm = () => {
+  const {
+    isLoggedIn,
+    isRequesting,
+    errorId,
+    errorMessage,
+    signIn,
+  } = useSignIn();
+
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {
-    isRequesting,
-    error,
-    errorMessage,
-    accountCreated,
-    setAccountCreated,
-    signIn,
-  } = useFormContext();
-
-  const { authToken } = useAuthContext();
-
-  useEffect(() => {
-    return () => {
-      // Dismissing Alert when the component is going to unmount
-      setAccountCreated(false);
-    };
-  }, [setAccountCreated]);
-
-  const history = useHistory();
-
-  useEffect(() => {
-    if (authToken) {
-      history.push("/dashboard");
-    }
-  }, [authToken, history]);
+  if (isLoggedIn) {
+    return <Redirect to="/dashboard" />;
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -54,10 +38,6 @@ const SignInForm = () => {
 
   const onChangePassword = (event) => {
     setPassword(event.target.value);
-  };
-
-  const onCloseAlert = (event) => {
-    setAccountCreated(false);
   };
 
   return (
@@ -81,8 +61,8 @@ const SignInForm = () => {
                   type="email"
                   placeholder="Saisissez votre adresse email"
                 />
-                {error === "err_no_user_found" ||
-                error === "err_invalid_mail" ? (
+                {errorId === "err_no_user_found" ||
+                errorId === "err_invalid_mail" ? (
                   <Form.Text id="passwordHelpBlock" className="text-danger">
                     {errorMessage}
                   </Form.Text>
@@ -96,7 +76,7 @@ const SignInForm = () => {
                   type="password"
                   placeholder="Saisissez votre mot de passe"
                 />
-                {error === "err_wrong_credentials" ? (
+                {errorId === "err_wrong_credentials" ? (
                   <Form.Text id="passwordHelpBlock" className="text-danger">
                     {errorMessage}
                   </Form.Text>
@@ -130,15 +110,6 @@ const SignInForm = () => {
               </Container>
             </Form>
           </Card>
-          <Alert
-            className="mt-4"
-            show={accountCreated}
-            variant="success"
-            dismissible
-            onClose={onCloseAlert}
-          >
-            Votre compte a bien été crée
-          </Alert>
         </Col>
       </Row>
     </Container>

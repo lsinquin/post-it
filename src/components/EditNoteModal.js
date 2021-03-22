@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -17,14 +17,17 @@ const EditNoteModal = () => {
     removeNote,
   } = useNotesContext();
 
-  const showModal = selectedNote !== null;
+  const show = !!selectedNote;
 
-  useEffect(() => {
-    if (selectedNote) {
-      setTitle(selectedNote.title);
-      setContent(selectedNote.content);
-    }
-  }, [selectedNote]);
+  const initFields = () => {
+    setTitle(selectedNote.title);
+    setContent(selectedNote.content);
+  };
+
+  const cleanFields = () => {
+    setTitle("");
+    setContent("");
+  };
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -36,24 +39,27 @@ const EditNoteModal = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("closing submitting...");
+
     handleUpdate();
   };
 
   const handleUpdate = () => {
-    console.log("closing updating...");
     updateNote({ ...selectedNote, title, content });
     setSelectedNote(null);
   };
 
   const handleDelete = () => {
-    console.log("closing deleting...");
     removeNote(selectedNote);
     setSelectedNote(null);
   };
 
   return (
-    <Modal show={showModal} onHide={handleUpdate}>
+    <Modal
+      show={show}
+      onEnter={initFields}
+      onExited={cleanFields}
+      onHide={handleUpdate}
+    >
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formTitle">

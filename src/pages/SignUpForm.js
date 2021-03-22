@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -7,27 +7,22 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 import logo from "../logo_cropped.png";
-import { useFormContext } from "../contexts/form/FormContext";
+import useSignUp from "../customHooks/useSignUp";
 
 const SignUpForm = () => {
-  const [mail, setMail] = useState("");
-  const [password, setPassword] = useState("");
   const {
     isRequesting,
-    error,
-    errorMessage,
     accountCreated,
+    errorId,
+    errorMessage,
     signUp,
-  } = useFormContext();
+    setAccountCreated,
+  } = useSignUp();
 
-  const history = useHistory();
-
-  useEffect(() => {
-    if (accountCreated) {
-      history.push("/signin");
-    }
-  }, [accountCreated, history]);
+  const [mail, setMail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -41,6 +36,10 @@ const SignUpForm = () => {
 
   const onChangePassword = (event) => {
     setPassword(event.target.value);
+  };
+
+  const onCloseAlert = (event) => {
+    setAccountCreated(false);
   };
 
   return (
@@ -64,7 +63,8 @@ const SignUpForm = () => {
                   type="email"
                   placeholder="Saisissez votre adresse email"
                 />
-                {error === "err_existing_user" ? (
+                {errorId === "err_existing_user" ||
+                errorId === "err_invalid_mail" ? (
                   <Form.Text id="passwordHelpBlock" className="text-danger">
                     {errorMessage}
                   </Form.Text>
@@ -78,7 +78,7 @@ const SignUpForm = () => {
                   type="password"
                   placeholder="Saisissez votre mot de passe"
                 />
-                {error === "err_invalid_password" ? (
+                {errorId === "err_invalid_password" ? (
                   <Form.Text id="passwordHelpBlock" className="text-danger">
                     {errorMessage}
                   </Form.Text>
@@ -109,6 +109,16 @@ const SignUpForm = () => {
               </Container>
             </Form>
           </Card>
+          <Alert
+            className="mt-4"
+            show={accountCreated}
+            variant="success"
+            dismissible
+            onClose={onCloseAlert}
+          >
+            Votre compte a bien été créé. Vous pouvez &nbsp;
+            {<Link to="/signin">vous connecter</Link>}.
+          </Alert>
         </Col>
       </Row>
     </Container>

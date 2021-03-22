@@ -6,13 +6,14 @@ import { useNotesContext } from "../contexts/notes/NotesContext";
 const Note = (props) => {
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const { setSelectedNote, removeNote } = useNotesContext();
+
   const handleClick = (event) => {
     setSelectedNote(props.note);
   };
 
   const handleDelete = (event) => {
     event.stopPropagation();
-    console.log("deleting...");
+
     removeNote(props.note);
   };
 

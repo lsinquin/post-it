@@ -16,14 +16,8 @@ const errorMapping = {
 };
 
 //TODO passer le token en paramètre
-const sendRequest = (axiosConfig, isSecured) => {
-  let config = { ...axiosConfig };
-  if (isSecured) {
-    const authToken = localStorage.getItem("authToken");
-    config.headers = { Authorization: authToken };
-  }
-
-  return axios(config).catch((error) => {
+const sendRequest = (axiosConfig, isSecured) =>
+  axios(axiosConfig).catch((error) => {
     if (error.response) {
       const { code: errorId } = error.response.data;
 
@@ -35,7 +29,6 @@ const sendRequest = (axiosConfig, isSecured) => {
       throw new APIError("Une erreur inattendue s'est produite", "err_unknown");
     }
   });
-};
 
 const login = (mail, password) =>
   sendRequest({
@@ -51,42 +44,34 @@ const postAccount = (mail, password) =>
     data: { mail, password },
   });
 
-const getNotes = () =>
-  sendRequest(
-    {
-      method: "get",
-      url: "/notes",
-    },
-    true
-  );
+const getNotes = (authToken) =>
+  sendRequest({
+    method: "get",
+    url: "/notes",
+    headers: { Authorization: authToken },
+  });
 
-const postNewNote = (title, content) =>
-  sendRequest(
-    {
-      method: "post",
-      url: "/notes",
-      data: { title, content },
-    },
-    true
-  );
+const postNewNote = (title, content, authToken) =>
+  sendRequest({
+    method: "post",
+    url: "/notes",
+    headers: { Authorization: authToken },
+    data: { title, content },
+  });
 
-const modifyNote = (id, title, content) =>
-  sendRequest(
-    {
-      method: "put",
-      url: `/notes/${id}`,
-      data: { title, content },
-    },
-    true
-  );
+const modifyNote = (id, title, content, authToken) =>
+  sendRequest({
+    method: "put",
+    url: `/notes/${id}`,
+    headers: { Authorization: authToken },
+    data: { title, content },
+  });
 
-const deleteNote = (id) =>
-  sendRequest(
-    {
-      method: "delete",
-      url: `/notes/${id}`,
-    },
-    true
-  );
+const deleteNote = (id, authToken) =>
+  sendRequest({
+    method: "delete",
+    url: `/notes/${id}`,
+    headers: { Authorization: authToken },
+  });
 
 export { login, postAccount, getNotes, postNewNote, modifyNote, deleteNote };

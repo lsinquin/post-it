@@ -1,104 +1,98 @@
-import { useState, useEffect } from "react";
+import { useState, useReducer, useEffect } from "react";
 import {
   getNotes,
   postNewNote,
   modifyNote,
   deleteNote,
 } from "../../utils/postItAPIWrapper";
+import notesReducer from "../../reducers/notesReducer";
+import { useAuthContext } from "../auth/AuthContext";
+import backgroundRequestDataReducer from "../../reducers/backgroundRequestDataReducer";
 
 function useNotesDataManager() {
-  const [notes, setNotes] = useState([]);
-  const [selectedNote, setSelectedNote] = useState(null);
+  const { authToken } = useAuthContext();
   const [isLoading, setIsLoading] = useState(true);
-  const [hasErrored, setHasErrored] = useState(false);
-  const [requestCounter, setRequestCounter] = useState(0);
+  const [notes, dispatchNotes] = useReducer(notesReducer, []);
+  const [{ isConsistent, requestCounter }, dispatchRequest] = useReducer(
+    backgroundRequestDataReducer,
+    {
+      requestCounter: 0,
+      isConsistent: true,
+    }
+  );
 
-  const incrementCounter = (prevValue) => prevValue + 1;
-  const decrementCounter = (prevValue) => prevValue - 1;
+  const [selectedNote, setSelectedNote] = useState(null);
 
   useEffect(() => {
     (async function () {
       try {
-        const { data: notes } = await getNotes();
+        const { data: notes } = await getNotes(authToken);
 
-        setNotes(notes);
+        dispatchNotes({ type: "SET_NOTES", payload: notes });
         setIsLoading(false);
       } catch (error) {
         console.log(error);
+
         setIsLoading(false);
-        setHasErrored(true);
+        dispatchRequest({ type: "REQUEST_CRITICAL_FAILURE" });
       }
     })();
-  }, []); // ???
+  }, [authToken]);
 
-  const addNote = (title, content) => {
-    (async function () {
-      try {
-        setRequestCounter(incrementCounter);
+  const addNote = async () => {
+    try {
+      dispatchRequest({ type: "REQUEST_START" });
 
-        const { data: note } = await postNewNote(title, content);
+      const { data: note } = await postNewNote("", "", authToken);
 
-        setNotes([
-          ...notes,
-          { id: note.id, title: note.title, content: note.content },
-        ]);
+      dispatchNotes({ type: "ADD_NOTE", payload: note });
 
-        setRequestCounter(decrementCounter);
-      } catch (error) {
-        console.log(error);
-        setHasErrored(true);
-      }
-    })();
+      dispatchRequest({ type: "REQUEST_SUCCESS" });
+    } catch (error) {
+      console.log(error);
+
+      dispatchRequest({ type: "REQUEST_CRITICAL_FAILURE" });
+    }
   };
 
-  const updateNote = (noteRec) => {
-    (async function () {
-      try {
-        setRequestCounter(incrementCounter);
+  const updateNote = async (noteRec) => {
+    try {
+      dispatchRequest({ type: "REQUEST_START" });
 
-        const newNotes = notes.map((item, index) => {
-          if (item.id === noteRec.id) {
-            return noteRec;
-          }
-          return item;
-        });
+      dispatchNotes({ type: "MODIFY_NOTE", payload: noteRec });
 
-        setNotes(newNotes);
+      await modifyNote(noteRec.id, noteRec.title, noteRec.content, authToken);
 
-        await modifyNote(noteRec.id, noteRec.title, noteRec.content);
+      dispatchRequest({ type: "REQUEST_SUCCESS" });
+    } catch (error) {
+      console.log(error);
 
-        setRequestCounter(decrementCounter);
-      } catch (error) {
-        console.log(error);
-        setHasErrored(true);
-      }
-    })();
+      dispatchRequest({ type: "REQUEST_CRITICAL_FAILURE" });
+    }
   };
 
-  const removeNote = (noteRec) => {
-    (async function () {
-      try {
-        setRequestCounter(incrementCounter);
+  const removeNote = async (noteRec) => {
+    try {
+      dispatchRequest({ type: "REQUEST_START" });
 
-        const newNotes = notes.filter((item, _) => item.id !== noteRec.id);
-        setNotes(newNotes);
+      dispatchNotes({ type: "REMOVE_NOTE", payload: { id: noteRec.id } });
 
-        await deleteNote(noteRec.id);
+      await deleteNote(noteRec.id, authToken);
 
-        setRequestCounter(decrementCounter);
-      } catch (error) {
-        console.log(error);
-        setHasErrored(true);
-      }
-    })();
+      dispatchRequest({ type: "REQUEST_SUCCESS" });
+    } catch (error) {
+      console.log(error);
+
+      dispatchRequest({ type: "REQUEST_CRITICAL_FAILURE" });
+    }
   };
 
   return {
-    notes,
-    selectedNote,
     isLoading,
-    hasErrored,
+    notes,
+    isConsistent,
     requestCounter,
+    selectedNote,
     addNote,
     updateNote,
     removeNote,

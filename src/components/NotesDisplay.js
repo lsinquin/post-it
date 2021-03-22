@@ -6,6 +6,7 @@ import { useNotesContext } from "../contexts/notes/NotesContext";
 
 const NotesDisplay = () => {
   const { notes } = useNotesContext();
+
   return (
     // <CardColumns className="mt-2 ml-2 h-100">
     //   {notes.map((note) => {
