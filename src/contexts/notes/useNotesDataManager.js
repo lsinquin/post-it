@@ -55,13 +55,16 @@ function useNotesDataManager() {
     }
   };
 
-  const updateNote = async (noteRec) => {
+  const updateNote = async (noteId, title, content) => {
     try {
       dispatchRequest({ type: "REQUEST_START" });
 
-      dispatchNotes({ type: "MODIFY_NOTE", payload: noteRec });
+      dispatchNotes({
+        type: "MODIFY_NOTE",
+        payload: { id: noteId, title, content },
+      });
 
-      await modifyNote(noteRec.id, noteRec.title, noteRec.content, authToken);
+      await modifyNote(noteId, title, content, authToken);
 
       dispatchRequest({ type: "REQUEST_SUCCESS" });
     } catch (error) {
@@ -71,13 +74,13 @@ function useNotesDataManager() {
     }
   };
 
-  const removeNote = async (noteRec) => {
+  const removeNote = async (noteId) => {
     try {
       dispatchRequest({ type: "REQUEST_START" });
 
-      dispatchNotes({ type: "REMOVE_NOTE", payload: { id: noteRec.id } });
+      dispatchNotes({ type: "REMOVE_NOTE", payload: { id: noteId } });
 
-      await deleteNote(noteRec.id, authToken);
+      await deleteNote(noteId, authToken);
 
       dispatchRequest({ type: "REQUEST_SUCCESS" });
     } catch (error) {
@@ -86,6 +89,14 @@ function useNotesDataManager() {
       dispatchRequest({ type: "REQUEST_CRITICAL_FAILURE" });
     }
   };
+
+  const selectNote = (noteId) => {
+    const note = notes.find((e) => e.id === noteId);
+
+    setSelectedNote(note);
+  };
+
+  const unselectNote = () => setSelectedNote(null);
 
   return {
     isLoading,
@@ -96,7 +107,8 @@ function useNotesDataManager() {
     addNote,
     updateNote,
     removeNote,
-    setSelectedNote,
+    selectNote,
+    unselectNote,
   };
 }
 

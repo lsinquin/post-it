@@ -3,18 +3,18 @@ import Card from "react-bootstrap/Card";
 import { FaTrash } from "react-icons/fa";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
-const Note = (props) => {
+const Note = ({ note }) => {
   const [showDeleteButton, setShowDeleteButton] = useState(false);
-  const { setSelectedNote, removeNote } = useNotesContext();
+  const { selectNote, removeNote } = useNotesContext();
 
   const handleClick = (event) => {
-    setSelectedNote(props.note);
+    selectNote(note.id);
   };
 
   const handleDelete = (event) => {
     event.stopPropagation();
 
-    removeNote(props.note);
+    removeNote(note.id);
   };
 
   const handleShowFloatingButton = () => setShowDeleteButton(true);
@@ -35,11 +35,9 @@ const Note = (props) => {
             size={16}
           />
         ) : null}
-        <Card.Title className="text-truncate">
-          {props.note.title || ""}
-        </Card.Title>
+        <Card.Title className="text-truncate">{note.title || ""}</Card.Title>
         <Card.Text className="note-content text-multi-wrap">
-          {props.note.content || ""}
+          {note.content || ""}
         </Card.Text>
       </Card.Body>
     </Card>

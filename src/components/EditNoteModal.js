@@ -12,7 +12,7 @@ const EditNoteModal = () => {
   const [content, setContent] = useState("");
   const {
     selectedNote,
-    setSelectedNote,
+    unselectNote,
     updateNote,
     removeNote,
   } = useNotesContext();
@@ -44,13 +44,13 @@ const EditNoteModal = () => {
   };
 
   const handleUpdate = () => {
-    updateNote({ ...selectedNote, title, content });
-    setSelectedNote(null);
+    updateNote(selectedNote.id, title, content);
+    unselectNote();
   };
 
   const handleDelete = () => {
-    removeNote(selectedNote);
-    setSelectedNote(null);
+    removeNote(selectedNote.id);
+    unselectNote();
   };
 
   return (

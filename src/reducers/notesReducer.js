@@ -7,11 +7,11 @@ function notesReducer(state, action) {
     case "REMOVE_NOTE":
       return state.filter((item, _) => item.id !== action.payload.id);
     case "MODIFY_NOTE":
-      const modifiedNote = action.payload;
+      const { id, title, content } = action.payload;
 
       return state.map((item, _) => {
-        if (item.id === modifiedNote.id) {
-          return modifiedNote;
+        if (item.id === id) {
+          return { ...item, title, content };
         }
         return item;
       });

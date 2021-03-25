@@ -21,7 +21,8 @@ export const NotesProvider = ({ children }) => {
     addNote,
     updateNote,
     removeNote,
-    setSelectedNote,
+    selectNote,
+    unselectNote,
   } = useNotesDataManager();
 
   const provider = {
@@ -33,7 +34,8 @@ export const NotesProvider = ({ children }) => {
     addNote,
     updateNote,
     removeNote,
-    setSelectedNote,
+    selectNote,
+    unselectNote,
   };
 
   return (
