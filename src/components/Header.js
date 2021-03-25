@@ -1,15 +1,13 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { FaPlusCircle, FaSignOutAlt } from "react-icons/fa";
+import { FaPlusCircle } from "react-icons/fa";
 import { AiOutlineCloudSync } from "react-icons/ai";
 import { TiTick } from "react-icons/ti";
+import UserDropdown from "./UserDropdown";
 import logo from "../logo_cropped.png";
-import { useAuthContext } from "../contexts/auth/AuthContext";
 import { useNotesContext } from "../contexts/notes/NotesContext";
-
 const Header = () => {
-  const { logOut } = useAuthContext();
   const { requestCounter, addNote } = useNotesContext();
 
   const handleAddNote = () => {
@@ -37,11 +35,7 @@ const Header = () => {
           ) : (
             <TiTick className="my-1 mr-2" size={32} />
           )}
-          <h5 className="my-0 ml-0 mr-2">{"lulu2751" || "placeholder"}</h5>
-          <FaSignOutAlt className="my-1 mr-2" size={32} onClick={logOut} />
-          {/* <div className="userinfo">
-            <span>{userName || "placeholder"}</span>
-          </div> */}
+          <UserDropdown />
         </Col>
       </Row>
     </Container>

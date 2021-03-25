@@ -15,7 +15,6 @@ const errorMapping = {
   err_unknown: "Une erreur inattendue s'est produite",
 };
 
-//TODO passer le token en paramètre
 const sendRequest = (axiosConfig, isSecured) =>
   axios(axiosConfig).catch((error) => {
     if (error.response) {

@@ -169,3 +169,7 @@ code {
 .custom-border {
   border: 1px solid rgba(163, 197, 100, 0.125);
 }
+
+.user-dropdown {
+  cursor: pointer;
+}
