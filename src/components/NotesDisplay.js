@@ -13,7 +13,7 @@ const NotesDisplay = () => {
     //     return <Note key={note.id} note={note} />;
     //   })}
     // </CardColumns>$
-    <Container fluid className="mt-3 h-100">
+    <Container fluid className="mt-3">
       <Row>
         {notes.map((note) => {
           return (

@@ -173,3 +173,10 @@ code {
 .user-dropdown {
   cursor: pointer;
 }
+
+.add-floating-button {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  color: #a3c564;
+}

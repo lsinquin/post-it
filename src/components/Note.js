@@ -27,7 +27,7 @@ const Note = ({ note }) => {
       onMouseEnter={handleShowFloatingButton}
       onMouseLeave={handleUnshowFloatingButton}
     >
-      <Card.Body>
+      <Card.Body className="p-2">
         {showDeleteButton ? (
           <FaTrash
             onClick={handleDelete}
