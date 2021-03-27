@@ -10,7 +10,7 @@ const FloatingAddButton = () => {
 
   return (
     <FaPlusCircle
-      className="add-floating-button"
+      className="floating-add-button"
       size={64}
       onClick={handleAddNote}
     />

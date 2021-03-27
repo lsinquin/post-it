@@ -1,51 +1,73 @@
-import { useState, useEffect } from "react";
+import { useReducer, useEffect } from "react";
+import { decode } from "jsonwebtoken";
+import { getCurrentTimeInSeconds } from "../../utils/currentTime";
+import authDataReducer from "../../reducers/authDataReducer";
 
 function useAuthDataManager() {
-  // const retrieveInitMail = () => localStorage.getItem("mail") || null;
-  // const retrieveInitUserId = () => localStorage.getItem("userId") || null;
-  const retrieveInitAuthToken = () => localStorage.getItem("authToken") || null;
+  //TODO ne stocker que le authToken ?
+  const retrieveInitialState = () => {
+    const userMail = localStorage.getItem("userMail");
+    const userId = localStorage.getItem("userId");
+    const authToken = localStorage.getItem("authToken");
+    const expiresAt = localStorage.getItem("expiresAt");
 
-  // const [mail, setMail] = useState(retrieveInitMail);
-  // const [userId, setUserId] = useState(retrieveInitUserId);
-  const [authToken, setAuthToken] = useState(retrieveInitAuthToken);
-
-  // useEffect(() => {
-  //   if (mail) {
-  //     localStorage.setItem("mail", mail);
-  //   } else {
-  //     localStorage.removeItem("mail");
-  //   }
-  // }, [mail]);
-
-  // useEffect(() => {
-  //   if (userId) {
-  //     localStorage.setItem("userId", userId);
-  //   } else {
-  //     localStorage.removeItem("userId");
-  //   }
-  // }, [userId]);
-
-  useEffect(() => {
-    if (authToken) {
-      localStorage.setItem("authToken", authToken);
+    if (userMail && userId && authToken && expiresAt) {
+      return { isLoggedIn: true, userMail, userId, authToken, expiresAt };
     } else {
-      localStorage.removeItem("authToken");
+      return {
+        isLoggedIn: false,
+        userMail: null,
+        userId: null,
+        authToken: null,
+        expiresAt: null,
+      };
     }
-  }, [authToken]);
-
-  const logOut = () => {
-    // setUserId(null);
-    // setMail(null);
-    setAuthToken(null);
   };
 
+  const [
+    { isLoggedIn, userMail, userId, authToken, expiresAt },
+    dispatch,
+  ] = useReducer(authDataReducer, null, retrieveInitialState);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      localStorage.setItem("userMail", userMail);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("authToken", authToken);
+      localStorage.setItem("expiresAt", expiresAt);
+    } else {
+      localStorage.removeItem("userMail");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("expiresAt");
+    }
+  }, [isLoggedIn, userMail, userId, authToken, expiresAt]);
+
+  const setAuthData = (authToken) => {
+    const { mail: userMail, userId, exp: expiresAt } = decode(authToken);
+
+    dispatch({
+      type: "SET_AUTH_DATA",
+      payload: { userMail, userId, authToken, expiresAt },
+    });
+  };
+
+  const logOut = () => {
+    dispatch({ type: "LOGOUT" });
+  };
+
+  // Disconnects if the token expired
+  if (expiresAt && getCurrentTimeInSeconds() > expiresAt) {
+    logOut();
+  }
+
   return {
-    // mail,
-    // userId,
+    isLoggedIn,
+    userMail,
+    userId,
     authToken,
-    // setMail,
-    // setUserId,
-    setAuthToken,
+    expiresAt,
+    setAuthData,
     logOut,
   };
 }

@@ -4,7 +4,7 @@ import { useAuthContext } from "../contexts/auth/AuthContext";
 import requestDataReducer from "../reducers/requestDataReducer";
 
 function useSignIn() {
-  const { authToken, setAuthToken } = useAuthContext();
+  const { isLoggedIn, setAuthData } = useAuthContext();
 
   const [{ isRequesting, errorId, errorMessage }, dispatch] = useReducer(
     requestDataReducer,
@@ -15,8 +15,6 @@ function useSignIn() {
     }
   );
 
-  const isLoggedIn = !!authToken;
-
   const signIn = async (mail, password) => {
     try {
       dispatch({ type: "REQUEST_START" });
@@ -26,7 +24,8 @@ function useSignIn() {
       } = await login(mail, password);
 
       dispatch({ type: "REQUEST_SUCCESS" });
-      setAuthToken(token);
+
+      setAuthData(token);
     } catch (error) {
       dispatch({ type: "REQUEST_FAILURE", payload: error });
     }

@@ -17,12 +17,12 @@ const TransparentToggle = forwardRef(({ children, onClick }, ref) => (
 ));
 
 const UserDropdown = () => {
-  const { logOut } = useAuthContext();
+  const { userMail, logOut } = useAuthContext();
 
   return (
     <Dropdown>
       <Dropdown.Toggle as={TransparentToggle} id="dropdown-custom-components">
-        {"ludovic.sinquin@gmail.com"}
+        {userMail}
       </Dropdown.Toggle>
 
       <Dropdown.Menu align="right">

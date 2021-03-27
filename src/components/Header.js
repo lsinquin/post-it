@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <Container fluid className="text-white header static-top ">
-      <Row className="justify-content-between align-items-center no-gutters">
+      <Row className="align-items-center no-gutters">
         <Col>
           <img src={logo} width="120" height="32" alt="logo"></img>
         </Col>

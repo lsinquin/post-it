@@ -12,11 +12,23 @@ export const useAuthContext = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const { authToken, setAuthToken, logOut } = useAuthDataManager();
+  const {
+    isLoggedIn,
+    userMail,
+    userId,
+    authToken,
+    expiresAt,
+    setAuthData,
+    logOut,
+  } = useAuthDataManager();
 
   const provider = {
+    isLoggedIn,
+    userMail,
+    userId,
     authToken,
-    setAuthToken,
+    expiresAt,
+    setAuthData,
     logOut,
   };
 
