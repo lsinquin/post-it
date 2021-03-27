@@ -43,7 +43,7 @@ const SignInForm = () => {
   return (
     <Container fluid className="form-background h-100">
       <Row className="justify-content-center align-items-center h-100">
-        <Col lg={4}>
+        <Col md={6} xl={4}>
           <img
             className="mx-auto d-block mb-4"
             src={logo}
