@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
-const NotesDisplay = () => {
+function NotesDisplay() {
   const { notes } = useNotesContext();
 
   return (
@@ -25,6 +25,6 @@ const NotesDisplay = () => {
       </Row>
     </Container>
   );
-};
+}
 
 export default NotesDisplay;

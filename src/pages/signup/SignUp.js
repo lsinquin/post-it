@@ -11,7 +11,7 @@ import Alert from "react-bootstrap/Alert";
 import logo from "../../logo_cropped.png";
 import useSignUp from "./hooks/useSignUp";
 
-const SignUpForm = () => {
+function SignUpForm() {
   const {
     isRequesting,
     accountCreated,
@@ -123,6 +123,6 @@ const SignUpForm = () => {
       </Row>
     </Container>
   );
-};
+}
 
 export default SignUpForm;

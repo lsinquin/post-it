@@ -10,7 +10,7 @@ import Spinner from "react-bootstrap/Spinner";
 import logo from "../../logo_cropped.png";
 import useSignIn from "./hooks/useSignIn";
 
-const SignInForm = () => {
+function SignInForm() {
   const {
     isLoggedIn,
     isRequesting,
@@ -114,6 +114,6 @@ const SignInForm = () => {
       </Row>
     </Container>
   );
-};
+}
 
 export default SignInForm;

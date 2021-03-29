@@ -7,7 +7,7 @@ import UserDropdown from "./UserDropdown";
 import logo from "../../../logo_cropped.png";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
-const Header = () => {
+function Header() {
   const { requestCounter } = useNotesContext();
 
   return (
@@ -27,6 +27,6 @@ const Header = () => {
       </Row>
     </Container>
   );
-};
+}
 
 export default Header;

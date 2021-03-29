@@ -17,7 +17,7 @@ export const ConfigContext = createContext();
 
 const configValue = {};
 
-const App = () => {
+function App() {
   return (
     <ConfigContext.Provider value={configValue}>
       <AuthProvider>
@@ -43,6 +43,6 @@ const App = () => {
       </AuthProvider>
     </ConfigContext.Provider>
   );
-};
+}
 
 export default App;

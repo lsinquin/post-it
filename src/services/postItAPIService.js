@@ -15,8 +15,8 @@ const errorMapping = {
   err_unknown: "Une erreur inattendue s'est produite",
 };
 
-const sendRequest = (axiosConfig, isSecured) =>
-  axios(axiosConfig).catch((error) => {
+function sendRequest(axiosConfig) {
+  return axios(axiosConfig).catch((error) => {
     if (error.response) {
       const { code: errorId } = error.response.data;
 
@@ -28,49 +28,56 @@ const sendRequest = (axiosConfig, isSecured) =>
       throw new APIError("Une erreur inattendue s'est produite", "err_unknown");
     }
   });
+}
 
-const login = (mail, password) =>
-  sendRequest({
+function login(mail, password) {
+  return sendRequest({
     method: "post",
     url: "/signin",
     data: { mail, password },
   });
+}
 
-const postAccount = (mail, password) =>
-  sendRequest({
+function postNewUser(mail, password) {
+  return sendRequest({
     method: "post",
     url: "/users",
     data: { mail, password },
   });
+}
 
-const getNotes = (authToken) =>
-  sendRequest({
+function getNotes(authToken) {
+  return sendRequest({
     method: "get",
     url: "/notes",
     headers: { Authorization: authToken },
   });
+}
 
-const postNewNote = (title, content, authToken) =>
-  sendRequest({
+function postNewNote(title, content, authToken) {
+  return sendRequest({
     method: "post",
     url: "/notes",
     headers: { Authorization: authToken },
     data: { title, content },
   });
+}
 
-const modifyNote = (id, title, content, authToken) =>
-  sendRequest({
+function putNote(id, title, content, authToken) {
+  return sendRequest({
     method: "put",
     url: `/notes/${id}`,
     headers: { Authorization: authToken },
     data: { title, content },
   });
+}
 
-const deleteNote = (id, authToken) =>
-  sendRequest({
+function deleteNote(id, authToken) {
+  return sendRequest({
     method: "delete",
     url: `/notes/${id}`,
     headers: { Authorization: authToken },
   });
+}
 
-export { login, postAccount, getNotes, postNewNote, modifyNote, deleteNote };
+export { login, postNewUser, getNotes, postNewNote, putNote, deleteNote };

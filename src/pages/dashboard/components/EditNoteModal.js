@@ -7,13 +7,13 @@ import Button from "react-bootstrap/Button";
 import { FaTrash, FaCheck } from "react-icons/fa";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
-const EditNoteModal = () => {
+function EditNoteModal() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const {
     selectedNote,
     unselectNote,
-    updateNote,
+    modifyNote,
     removeNote,
   } = useNotesContext();
 
@@ -40,11 +40,11 @@ const EditNoteModal = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    handleUpdate();
+    handleModify();
   };
 
-  const handleUpdate = () => {
-    updateNote(selectedNote.id, title, content);
+  const handleModify = () => {
+    modifyNote(selectedNote.id, title, content);
     unselectNote();
   };
 
@@ -58,7 +58,7 @@ const EditNoteModal = () => {
       show={show}
       onEnter={initFields}
       onExited={cleanFields}
-      onHide={handleUpdate}
+      onHide={handleModify}
     >
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
@@ -88,6 +88,6 @@ const EditNoteModal = () => {
       </Modal.Body>
     </Modal>
   );
-};
+}
 
 export default EditNoteModal;

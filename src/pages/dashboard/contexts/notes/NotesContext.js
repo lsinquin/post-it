@@ -3,15 +3,15 @@ import useNotesDataManager from "./useNotesDataManager";
 
 const NotesContext = createContext();
 
-export const useNotesContext = () => {
+function useNotesContext() {
   const context = useContext(NotesContext);
   if (context === null) {
     throw new Error("useNotesContext must be used within a NotesProvider");
   }
   return context;
-};
+}
 
-export const NotesProvider = ({ children }) => {
+function NotesProvider({ children }) {
   const {
     isLoading,
     notes,
@@ -19,7 +19,7 @@ export const NotesProvider = ({ children }) => {
     requestCounter,
     selectedNote,
     addNote,
-    updateNote,
+    modifyNote,
     removeNote,
     selectNote,
     unselectNote,
@@ -32,7 +32,7 @@ export const NotesProvider = ({ children }) => {
     requestCounter,
     selectedNote,
     addNote,
-    updateNote,
+    modifyNote,
     removeNote,
     selectNote,
     unselectNote,
@@ -41,4 +41,6 @@ export const NotesProvider = ({ children }) => {
   return (
     <NotesContext.Provider value={provider}>{children}</NotesContext.Provider>
   );
-};
+}
+
+export { useNotesContext, NotesProvider };

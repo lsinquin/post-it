@@ -1,4 +1,4 @@
-export default class APIerror extends Error {
+class APIError extends Error {
   constructor(
     message = "Une erreur innatendu a eu lieu",
     errorId = "err_unknown"
@@ -8,3 +8,5 @@ export default class APIerror extends Error {
     this.name = "APIerror";
   }
 }
+
+export default APIError;

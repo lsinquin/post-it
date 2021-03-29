@@ -3,15 +3,15 @@ import useAuthDataManager from "./useAuthDataManager";
 
 const AuthContext = createContext();
 
-export const useAuthContext = () => {
+function useAuthContext() {
   const context = useContext(AuthContext);
   if (context === null) {
     throw new Error("useAuthContext must be used within a AuthProvider");
   }
   return context;
-};
+}
 
-export const AuthProvider = ({ children }) => {
+function AuthProvider({ children }) {
   const {
     isLoggedIn,
     userMail,
@@ -35,4 +35,6 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={provider}>{children}</AuthContext.Provider>
   );
-};
+}
+
+export { useAuthContext, AuthProvider };

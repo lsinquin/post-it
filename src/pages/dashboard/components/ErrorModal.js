@@ -1,7 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
-const ErrorModal = () => {
+function ErrorModal() {
   const { isConsistent } = useNotesContext();
 
   return (
@@ -15,6 +15,6 @@ const ErrorModal = () => {
       </Modal.Body>
     </Modal>
   );
-};
+}
 
 export default ErrorModal;

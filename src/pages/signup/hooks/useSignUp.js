@@ -1,5 +1,5 @@
 import { useState, useReducer } from "react";
-import { postAccount } from "../../../services/postItAPIService";
+import { postNewUser } from "../../../services/postItAPIService";
 import requestDataReducer from "../../../reducers/requestDataReducer";
 
 function useSignUp() {
@@ -18,7 +18,7 @@ function useSignUp() {
       setAccountCreated(false);
       dispatch({ type: "REQUEST_START" });
 
-      await postAccount(mail, password);
+      await postNewUser(mail, password);
 
       dispatch({ type: "REQUEST_SUCCESS" });
       setAccountCreated(true);

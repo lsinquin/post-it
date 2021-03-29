@@ -2,7 +2,7 @@ import { useState, useReducer, useEffect } from "react";
 import {
   getNotes,
   postNewNote,
-  modifyNote,
+  putNote,
   deleteNote,
 } from "../../../../services/postItAPIService";
 import notesReducer from "./notesReducer";
@@ -55,7 +55,7 @@ function useNotesDataManager() {
     }
   };
 
-  const updateNote = async (noteId, title, content) => {
+  const modifyNote = async (noteId, title, content) => {
     try {
       dispatchRequest({ type: "REQUEST_START" });
 
@@ -64,7 +64,7 @@ function useNotesDataManager() {
         payload: { id: noteId, title, content },
       });
 
-      await modifyNote(noteId, title, content, authToken);
+      await putNote(noteId, title, content, authToken);
 
       dispatchRequest({ type: "REQUEST_SUCCESS" });
     } catch (error) {
@@ -105,7 +105,7 @@ function useNotesDataManager() {
     requestCounter,
     selectedNote,
     addNote,
-    updateNote,
+    modifyNote,
     removeNote,
     selectNote,
     unselectNote,

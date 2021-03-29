@@ -16,7 +16,7 @@ const TransparentToggle = forwardRef(({ children, onClick }, ref) => (
   </div>
 ));
 
-const UserDropdown = () => {
+function UserDropdown() {
   const { userMail, logOut } = useAuthContext();
 
   return (
@@ -31,6 +31,6 @@ const UserDropdown = () => {
       </Dropdown.Menu>
     </Dropdown>
   );
-};
+}
 
 export default UserDropdown;

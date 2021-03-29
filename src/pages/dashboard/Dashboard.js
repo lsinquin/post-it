@@ -5,14 +5,16 @@ import EditNoteModal from "./components/EditNoteModal";
 import ErrorModal from "./components/ErrorModal";
 import { NotesProvider } from "./contexts/notes/NotesContext";
 
-const Dashboard = () => (
-  <NotesProvider>
-    <Header />
-    <NotesDisplay />
-    <FloatingAddButton />
-    <EditNoteModal />
-    <ErrorModal />
-  </NotesProvider>
-);
+function Dashboard() {
+  return (
+    <NotesProvider>
+      <Header />
+      <NotesDisplay />
+      <FloatingAddButton />
+      <EditNoteModal />
+      <ErrorModal />
+    </NotesProvider>
+  );
+}
 
 export default Dashboard;

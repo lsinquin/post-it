@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import { FaTrash } from "react-icons/fa";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
-const Note = ({ note }) => {
+function Note({ note }) {
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const { selectNote, removeNote } = useNotesContext();
 
@@ -42,6 +42,6 @@ const Note = ({ note }) => {
       </Card.Body>
     </Card>
   );
-};
+}
 
 export default Note;

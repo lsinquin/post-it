@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import logo from "../../logo_cropped.png";
 
-const ForgottenPassword = () => {
+function ForgottenPassword() {
   const [mail, setMail] = useState("");
 
   const handleSubmit = async (event) => {
@@ -66,6 +66,6 @@ const ForgottenPassword = () => {
       </Row>
     </Container>
   );
-};
+}
 
 export default ForgottenPassword;
