@@ -7,17 +7,15 @@ import {
 } from "react-router-dom";
 import { createContext } from "react";
 import PrivateRoute from "./components/PrivateRoute";
-import SignInForm from "./pages/SignInForm";
-import SignUpForm from "./pages/SignUpForm";
-import ForgottenPasswordForm from "./pages/ForgottenPasswordForm";
-import Dashboard from "./pages/Dashboard";
+import SignInForm from "./pages/signin/SignIn";
+import SignUpForm from "./pages/signup/SignUp";
+import ForgottenPasswordForm from "./pages/forgotten-password/ForgottenPassword";
+import Dashboard from "./pages/dashboard/Dashboard";
 import { AuthProvider } from "./contexts/auth/AuthContext";
 
 export const ConfigContext = createContext();
 
-const configValue = {
-  errMessageDuration: 5000,
-};
+const configValue = {};
 
 const App = () => {
   return (
@@ -28,7 +26,7 @@ const App = () => {
             <Route path="/signin">
               <SignInForm />
             </Route>
-            <Route path="/forgottenpassword">
+            <Route path="/forgotten-password">
               <ForgottenPasswordForm />
             </Route>
             <Route path="/signup">

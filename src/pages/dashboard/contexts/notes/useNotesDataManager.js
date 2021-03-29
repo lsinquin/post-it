@@ -4,10 +4,10 @@ import {
   postNewNote,
   modifyNote,
   deleteNote,
-} from "../../utils/postItAPIWrapper";
-import notesReducer from "../../reducers/notesReducer";
-import { useAuthContext } from "../auth/AuthContext";
-import backgroundRequestDataReducer from "../../reducers/backgroundRequestDataReducer";
+} from "../../../../services/postItAPIService";
+import notesReducer from "./notesReducer";
+import { useAuthContext } from "../../../../contexts/auth/AuthContext";
+import backgroundRequestDataReducer from "./backgroundRequestDataReducer";
 
 function useNotesDataManager() {
   const { authToken } = useAuthContext();

@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useAuthContext } from "../contexts/auth/AuthContext";
+import { useAuthContext } from "../../../contexts/auth/AuthContext";
 
 const TransparentToggle = forwardRef(({ children, onClick }, ref) => (
   <div

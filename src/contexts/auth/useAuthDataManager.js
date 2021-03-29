@@ -1,7 +1,7 @@
 import { useReducer, useEffect } from "react";
 import { decode } from "jsonwebtoken";
 import { getCurrentTimeInSeconds } from "../../utils/currentTime";
-import authDataReducer from "../../reducers/authDataReducer";
+import authDataReducer from "./authDataReducer";
 
 function useAuthDataManager() {
   //TODO ne stocker que le authToken ?

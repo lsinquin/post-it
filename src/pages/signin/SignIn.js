@@ -7,8 +7,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
-import logo from "../logo_cropped.png";
-import useSignIn from "../customHooks/useSignIn";
+import logo from "../../logo_cropped.png";
+import useSignIn from "./hooks/useSignIn";
 
 const SignInForm = () => {
   const {
@@ -104,7 +104,7 @@ const SignInForm = () => {
                     <Link to="/signup">Créer un compte</Link>
                   </Col>
                   <Col xs={12} lg={6} className="text-center">
-                    <Link to="/forgottenpassword">Mot de passe oublié</Link>
+                    <Link to="/forgotten-password">Mot de passe oublié</Link>
                   </Col>
                 </Row>
               </Container>

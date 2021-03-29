@@ -1,7 +1,7 @@
 import { useReducer } from "react";
-import { login } from "../utils/postItAPIWrapper";
-import { useAuthContext } from "../contexts/auth/AuthContext";
-import requestDataReducer from "../reducers/requestDataReducer";
+import { login } from "../../../services/postItAPIService";
+import { useAuthContext } from "../../../contexts/auth/AuthContext";
+import requestDataReducer from "../../../reducers/requestDataReducer";
 
 function useSignIn() {
   const { isLoggedIn, setAuthData } = useAuthContext();

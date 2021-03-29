@@ -8,8 +8,8 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
-import logo from "../logo_cropped.png";
-import useSignUp from "../customHooks/useSignUp";
+import logo from "../../logo_cropped.png";
+import useSignUp from "./hooks/useSignUp";
 
 const SignUpForm = () => {
   const {

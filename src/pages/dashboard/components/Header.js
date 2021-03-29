@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import { AiOutlineCloudSync } from "react-icons/ai";
 import { TiTick } from "react-icons/ti";
 import UserDropdown from "./UserDropdown";
-import logo from "../logo_cropped.png";
+import logo from "../../../logo_cropped.png";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
 const Header = () => {

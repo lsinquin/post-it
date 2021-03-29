@@ -1,6 +1,6 @@
 import { useState, useReducer } from "react";
-import { postAccount } from "../utils/postItAPIWrapper";
-import requestDataReducer from "../reducers/requestDataReducer";
+import { postAccount } from "../../../services/postItAPIService";
+import requestDataReducer from "../../../reducers/requestDataReducer";
 
 function useSignUp() {
   const [accountCreated, setAccountCreated] = useState(false);
