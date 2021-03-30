@@ -93,9 +93,6 @@ code {
   border: 1px solid black;
 } */
 
-.note {
-  height: 270px;
-}
 .title {
   padding: 10px;
   text-align: center;
@@ -179,4 +176,21 @@ code {
   right: 15px;
   bottom: 15px;
   color: #a3c564;
+}
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -15px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 15px; /* gutter size */
+  background-clip: padding-box;
+}
+
+.note {
+  min-height: 80px;
+  margin-bottom: 15px;
 }

@@ -35,7 +35,9 @@ function Note({ note }) {
             size={16}
           />
         ) : null}
-        <Card.Title className="text-truncate">{note.title || ""}</Card.Title>
+        <Card.Title className="text-truncate mb-1">
+          {note.title || ""}
+        </Card.Title>
         <Card.Text className="note-content text-multi-wrap">
           {note.content || ""}
         </Card.Text>

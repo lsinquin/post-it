@@ -1,29 +1,27 @@
 import Note from "./Note";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Masonry from "react-masonry-css";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
 function NotesDisplay() {
   const { notes } = useNotesContext();
 
+  const breakpointCols = {
+    default: 6,
+    1100: 4,
+    800: 3,
+    600: 2,
+  };
+
   return (
-    // <CardColumns className="mt-2 ml-2 h-100">
-    //   {notes.map((note) => {
-    //     return <Note key={note.id} note={note} />;
-    //   })}
-    // </CardColumns>$
-    <Container fluid className="mt-3">
-      <Row>
-        {notes.map((note) => {
-          return (
-            <Col key={note.id} className="mb-3" md={6} lg={3} xl={2}>
-              <Note note={note} />
-            </Col>
-          );
-        })}
-      </Row>
-    </Container>
+    <Masonry
+      breakpointCols={breakpointCols}
+      className="my-masonry-grid p-2"
+      columnClassName="my-masonry-grid_column"
+    >
+      {notes.map((note) => {
+        return <Note key={note.id} note={note} />;
+      })}
+    </Masonry>
   );
 }
 
