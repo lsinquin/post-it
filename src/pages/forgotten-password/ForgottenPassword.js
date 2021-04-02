@@ -24,7 +24,7 @@ function ForgottenPassword() {
   return (
     <Container fluid className="form-background h-100">
       <Row className="justify-content-center align-items-center h-100">
-        <Col md={6} xl={4}>
+        <Col>
           <img
             className="mx-auto d-block mb-4"
             src={logo}
@@ -32,35 +32,37 @@ function ForgottenPassword() {
             height="80"
             alt="logo"
           ></img>
-          <Card body>
-            <h3 className="text-center mb-4">Mot de passe oublié</h3>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formEmail">
-                <Form.Label>Adresse email</Form.Label>
-                <Form.Control
-                  onChange={onChangeMail}
-                  type="email"
-                  placeholder="Saisissez votre adresse email"
-                />
-              </Form.Group>
+          <Card className="form-card">
+            <Card.Body className="p-4">
+              <h3 className="text-center mb-4">Mot de passe oublié</h3>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formEmail">
+                  <Form.Label>Adresse email</Form.Label>
+                  <Form.Control
+                    onChange={onChangeMail}
+                    type="email"
+                    placeholder="Saisissez votre adresse email"
+                  />
+                </Form.Group>
 
-              <Button
-                className="btn-block"
-                variant="primary"
-                type="submit"
-                disabled
-              >
-                Réinitialiser le mot de passe
-              </Button>
+                <Button
+                  className="btn-block mt-4"
+                  variant="primary"
+                  type="submit"
+                  disabled
+                >
+                  Réinitialiser le mot de passe
+                </Button>
 
-              <Container className="mt-2 mb-0">
-                <Row>
-                  <Col className="text-center">
-                    <Link to="/signin">Se connecter</Link>
-                  </Col>
-                </Row>
-              </Container>
-            </Form>
+                <Container className="mt-3 mb-0">
+                  <Row>
+                    <Col className="text-center">
+                      <Link to="/signin">Se connecter</Link>
+                    </Col>
+                  </Row>
+                </Container>
+              </Form>
+            </Card.Body>
           </Card>
         </Col>
       </Row>

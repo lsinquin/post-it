@@ -31,7 +31,7 @@ function Note({ note }) {
         {showDeleteButton ? (
           <FaTrash
             onClick={handleDelete}
-            className="float-right text-danger"
+            className="delete-button float-right text-danger"
             size={16}
           />
         ) : null}

@@ -63,9 +63,11 @@ function EditNoteModal() {
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formTitle">
+            <Form.Label>Titre</Form.Label>
             <Form.Control type="text" onChange={onChangeTitle} value={title} />
           </Form.Group>
           <Form.Group controlId="formContent">
+            <Form.Label>Contenu</Form.Label>
             <Form.Control
               as="textarea"
               value={content}

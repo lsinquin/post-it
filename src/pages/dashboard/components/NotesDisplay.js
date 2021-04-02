@@ -7,15 +7,16 @@ function NotesDisplay() {
 
   const breakpointCols = {
     default: 6,
-    1100: 4,
-    800: 3,
-    600: 2,
+    1200: 5,
+    992: 4,
+    768: 3,
+    576: 2,
   };
 
   return (
     <Masonry
       breakpointCols={breakpointCols}
-      className="my-masonry-grid p-2"
+      className="my-masonry-grid p-4 m-2"
       columnClassName="my-masonry-grid_column"
     >
       {notes.map((note) => {

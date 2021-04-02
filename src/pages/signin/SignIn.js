@@ -43,7 +43,7 @@ function SignInForm() {
   return (
     <Container fluid className="form-background h-100">
       <Row className="justify-content-center align-items-center h-100">
-        <Col md={6} xl={4}>
+        <Col>
           <img
             className="mx-auto d-block mb-4"
             src={logo}
@@ -51,64 +51,71 @@ function SignInForm() {
             height="80"
             alt="logo"
           ></img>
-          <Card body>
-            <h3 className="text-center mb-4">Connexion</h3>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formEmail">
-                <Form.Label>Adresse email</Form.Label>
-                <Form.Control
-                  onChange={onChangeMail}
-                  type="email"
-                  placeholder="Saisissez votre adresse email"
-                />
-                {errorId === "err_no_user_found" ||
-                errorId === "err_invalid_mail" ? (
-                  <Form.Text id="passwordHelpBlock" className="text-danger">
-                    {errorMessage}
-                  </Form.Text>
-                ) : null}
-              </Form.Group>
+          <Card className="form-card">
+            <Card.Body className="p-4">
+              <h3 className="text-center mb-4">Connexion</h3>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formEmail">
+                  <Form.Label>Adresse email</Form.Label>
+                  <Form.Control
+                    onChange={onChangeMail}
+                    type="email"
+                    placeholder="Saisissez votre adresse email"
+                  />
+                  {errorId === "err_no_user_found" ||
+                  errorId === "err_invalid_mail" ? (
+                    <Form.Text id="passwordHelpBlock" className="text-danger">
+                      {errorMessage}
+                    </Form.Text>
+                  ) : null}
+                </Form.Group>
 
-              <Form.Group controlId="formPassword">
-                <Form.Label>Mot de passe</Form.Label>
-                <Form.Control
-                  onChange={onChangePassword}
-                  type="password"
-                  placeholder="Saisissez votre mot de passe"
-                />
-                {errorId === "err_wrong_credentials" ? (
-                  <Form.Text id="passwordHelpBlock" className="text-danger">
-                    {errorMessage}
-                  </Form.Text>
-                ) : null}
-              </Form.Group>
+                <Form.Group controlId="formPassword">
+                  <Form.Label>Mot de passe</Form.Label>
+                  <Form.Control
+                    onChange={onChangePassword}
+                    type="password"
+                    placeholder="Saisissez votre mot de passe"
+                  />
+                  {errorId === "err_wrong_credentials" ? (
+                    <Form.Text id="passwordHelpBlock" className="text-danger">
+                      {errorMessage}
+                    </Form.Text>
+                  ) : null}
+                </Form.Group>
 
-              <Button
-                className="btn-block"
-                variant="primary"
-                type="submit"
-                disabled={isRequesting}
-              >
-                {isRequesting ? (
-                  <Spinner as="span" size="sm" animation="border" role="status">
-                    <span className="sr-only">Loading...</span>
-                  </Spinner>
-                ) : (
-                  "Se connecter"
-                )}
-              </Button>
+                <Button
+                  className="btn-block mt-4"
+                  variant="primary"
+                  type="submit"
+                  disabled={isRequesting}
+                >
+                  {isRequesting ? (
+                    <Spinner
+                      as="span"
+                      size="sm"
+                      animation="border"
+                      role="status"
+                    >
+                      <span className="sr-only">Loading...</span>
+                    </Spinner>
+                  ) : (
+                    "Se connecter"
+                  )}
+                </Button>
 
-              <Container className="mt-2 mb-0">
-                <Row>
-                  <Col xs={12} lg={6} className="text-center ">
-                    <Link to="/signup">Créer un compte</Link>
-                  </Col>
-                  <Col xs={12} lg={6} className="text-center">
-                    <Link to="/forgotten-password">Mot de passe oublié</Link>
-                  </Col>
-                </Row>
-              </Container>
-            </Form>
+                <Container className="mt-3 mb-0">
+                  <Row>
+                    <Col xs={12} lg={6} className="text-center ">
+                      <Link to="/signup">Créer un compte</Link>
+                    </Col>
+                    <Col xs={12} lg={6} className="text-center">
+                      <Link to="/forgotten-password">Mot de passe oublié</Link>
+                    </Col>
+                  </Row>
+                </Container>
+              </Form>
+            </Card.Body>
           </Card>
         </Col>
       </Row>
