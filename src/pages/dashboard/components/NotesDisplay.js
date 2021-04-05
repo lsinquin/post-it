@@ -3,7 +3,11 @@ import Masonry from "react-masonry-css";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
 function NotesDisplay() {
-  const { notes } = useNotesContext();
+  const { displayStatus, notes } = useNotesContext();
+
+  if (displayStatus === "loading") {
+    return <div>Loading...</div>;
+  }
 
   const breakpointCols = {
     default: 6,

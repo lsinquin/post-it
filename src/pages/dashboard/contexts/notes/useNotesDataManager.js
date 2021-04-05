@@ -9,9 +9,11 @@ import notesReducer from "./notesReducer";
 import { useAuthContext } from "../../../../contexts/auth/AuthContext";
 import backgroundRequestDataReducer from "./backgroundRequestDataReducer";
 
+// const displayValues = ["loading", "displaying", "adding", "modifying"];
+
 function useNotesDataManager() {
   const { authToken } = useAuthContext();
-  const [isLoading, setIsLoading] = useState(true);
+  const [displayStatus, setDisplayStatus] = useState("loading");
   const [notes, dispatchNotes] = useReducer(notesReducer, []);
   const [{ isConsistent, requestCounter }, dispatchRequest] = useReducer(
     backgroundRequestDataReducer,
@@ -29,24 +31,24 @@ function useNotesDataManager() {
         const { data: notes } = await getNotes(authToken);
 
         dispatchNotes({ type: "SET_NOTES", payload: notes });
-        setIsLoading(false);
+        setDisplayStatus("displaying");
       } catch (error) {
         console.log(error);
 
-        setIsLoading(false);
+        setDisplayStatus("displaying");
         dispatchRequest({ type: "REQUEST_CRITICAL_FAILURE" });
       }
     })();
   }, [authToken]);
 
-  const addNote = async () => {
+  const addNote = async (title, content) => {
     try {
       dispatchRequest({ type: "REQUEST_START" });
 
-      const { data: note } = await postNewNote("", "", authToken);
+      const { data: note } = await postNewNote(title, content, authToken);
 
+      setDisplayStatus("displaying");
       dispatchNotes({ type: "ADD_NOTE", payload: note });
-
       dispatchRequest({ type: "REQUEST_SUCCESS" });
     } catch (error) {
       console.log(error);
@@ -90,16 +92,28 @@ function useNotesDataManager() {
     }
   };
 
+  const createNoteModal = () => {
+    setDisplayStatus("adding");
+  };
+
+  const cancelCreateNote = () => {
+    setDisplayStatus("displaying");
+  };
+
   const selectNote = (noteId) => {
     const note = notes.find((e) => e.id === noteId);
 
+    setDisplayStatus("modifying");
     setSelectedNote(note);
   };
 
-  const unselectNote = () => setSelectedNote(null);
+  const unselectNote = () => {
+    setDisplayStatus("displaying");
+    setSelectedNote(null);
+  };
 
   return {
-    isLoading,
+    displayStatus,
     notes,
     isConsistent,
     requestCounter,
@@ -107,6 +121,8 @@ function useNotesDataManager() {
     addNote,
     modifyNote,
     removeNote,
+    createNoteModal,
+    cancelCreateNote,
     selectNote,
     unselectNote,
   };

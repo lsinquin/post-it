@@ -13,7 +13,7 @@ function useNotesContext() {
 
 function NotesProvider({ children }) {
   const {
-    isLoading,
+    displayStatus,
     notes,
     isConsistent,
     requestCounter,
@@ -21,12 +21,14 @@ function NotesProvider({ children }) {
     addNote,
     modifyNote,
     removeNote,
+    createNoteModal,
+    cancelCreateNote,
     selectNote,
     unselectNote,
   } = useNotesDataManager();
 
   const provider = {
-    isLoading,
+    displayStatus,
     notes,
     isConsistent,
     requestCounter,
@@ -34,6 +36,8 @@ function NotesProvider({ children }) {
     addNote,
     modifyNote,
     removeNote,
+    createNoteModal,
+    cancelCreateNote,
     selectNote,
     unselectNote,
   };

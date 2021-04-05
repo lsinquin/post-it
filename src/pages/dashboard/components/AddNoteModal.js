@@ -4,30 +4,22 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import { FaTrash, FaCheck } from "react-icons/fa";
+import Spinner from "react-bootstrap/Spinner";
+import { FaBan, FaCheck } from "react-icons/fa";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
-function EditNoteModal() {
+function AddNoteModal() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const {
-    displayStatus,
-    selectedNote,
-    unselectNote,
-    modifyNote,
-    removeNote,
-  } = useNotesContext();
+  const [isAdding, setIsAdding] = useState(false);
+  const { displayStatus, addNote, cancelCreateNote } = useNotesContext();
 
-  const show = displayStatus === "modifying";
-
-  const initFields = () => {
-    setTitle(selectedNote.title);
-    setContent(selectedNote.content);
-  };
+  const show = displayStatus === "adding";
 
   const cleanFields = () => {
     setTitle("");
     setContent("");
+    setIsAdding(false);
   };
 
   const onChangeTitle = (event) => setTitle(event.target.value);
@@ -37,28 +29,18 @@ function EditNoteModal() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    handleModify();
+    setIsAdding(true);
+    handleAdd();
   };
 
-  const handleModify = () => {
-    modifyNote(selectedNote.id, title, content);
-    unselectNote();
-  };
+  const handleAdd = () => addNote(title, content);
 
-  const handleDelete = () => {
-    removeNote(selectedNote.id);
-    unselectNote();
-  };
+  const handleCancel = () => cancelCreateNote();
 
   return (
-    <Modal
-      show={show}
-      onEnter={initFields}
-      onExited={cleanFields}
-      onHide={handleModify}
-    >
+    <Modal show={show} onExited={cleanFields} onHide={handleCancel}>
       <Modal.Body>
-        <h2 className="text-center mb-4">Modification</h2>
+        <h2 className="text-center mb-4">Nouvelle note</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formTitle">
             <Form.Label>Titre</Form.Label>
@@ -76,11 +58,17 @@ function EditNoteModal() {
 
           <Container>
             <Row className="justify-content-end align-items-center">
-              <Button className="mr-2" onClick={handleDelete} variant="danger">
-                <FaTrash size={20} />
+              <Button className="mr-2" onClick={handleCancel} variant="danger">
+                <FaBan size={20} />
               </Button>
               <Button variant="primary" type="submit">
-                <FaCheck size={20} />
+                {isAdding ? (
+                  <Spinner as="span" size="sm" animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                ) : (
+                  <FaCheck size={20} />
+                )}
               </Button>
             </Row>
           </Container>
@@ -90,4 +78,4 @@ function EditNoteModal() {
   );
 }
 
-export default EditNoteModal;
+export default AddNoteModal;
