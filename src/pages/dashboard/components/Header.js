@@ -4,17 +4,17 @@ import Col from "react-bootstrap/Col";
 import { AiOutlineCloudSync } from "react-icons/ai";
 import { TiTick } from "react-icons/ti";
 import UserDropdown from "./UserDropdown";
-import logo from "../../../logo_cropped.png";
+import logo from "../../../logo.svg";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
 function Header() {
   const { requestCounter } = useNotesContext();
 
   return (
-    <Container fluid className="text-white header static-top ">
-      <Row className="align-items-center no-gutters">
+    <Container fluid className="text-black header static-top ">
+      <Row className="align-items-center no-gutters h-100">
         <Col>
-          <img src={logo} width="120" height="32" alt="logo"></img>
+          <img src={logo} width="100" alt="logo"></img>
         </Col>
         <Col className="d-flex justify-content-end align-items-center">
           {requestCounter > 0 ? (

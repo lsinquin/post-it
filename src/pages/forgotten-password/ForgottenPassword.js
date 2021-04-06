@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import logo from "../../logo_cropped.png";
+import logo from "../../logo.svg";
 
 function ForgottenPassword() {
   const [mail, setMail] = useState("");
@@ -26,13 +26,12 @@ function ForgottenPassword() {
       <Row className="justify-content-center align-items-center h-100">
         <Col>
           <img
-            className="mx-auto d-block mb-4"
+            className="mx-auto d-block mb-5"
             src={logo}
             width="300"
-            height="80"
             alt="logo"
           ></img>
-          <Card className="form-card">
+          <Card className="form-card rounded-lg">
             <Card.Body className="p-4">
               <h3 className="text-center mb-4">Mot de passe oublié</h3>
               <Form onSubmit={handleSubmit}>
