@@ -60,6 +60,7 @@ function SignInForm() {
                     onChange={onChangeMail}
                     type="email"
                     placeholder="Saisissez votre adresse email"
+                    autoFocus
                   />
                   {errorId === "err_no_user_found" ||
                   errorId === "err_invalid_mail" ? (

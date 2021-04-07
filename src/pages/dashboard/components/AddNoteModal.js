@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -14,7 +14,13 @@ function AddNoteModal() {
   const [isAdding, setIsAdding] = useState(false);
   const { displayStatus, addNote, cancelCreateNote } = useNotesContext();
 
+  const titleInputRef = useRef(null);
+
   const show = displayStatus === "adding";
+
+  const focusTitleField = () => {
+    titleInputRef.current.focus();
+  };
 
   const cleanFields = () => {
     setTitle("");
@@ -38,13 +44,23 @@ function AddNoteModal() {
   const handleCancel = () => cancelCreateNote();
 
   return (
-    <Modal show={show} onExited={cleanFields} onHide={handleCancel}>
+    <Modal
+      show={show}
+      onEnter={focusTitleField}
+      onHide={handleCancel}
+      onExited={cleanFields}
+    >
       <Modal.Body>
         <h2 className="text-center mb-4">Nouvelle note</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formTitle">
             <Form.Label>Titre</Form.Label>
-            <Form.Control type="text" onChange={onChangeTitle} value={title} />
+            <Form.Control
+              type="text"
+              onChange={onChangeTitle}
+              value={title}
+              ref={titleInputRef}
+            />
           </Form.Group>
           <Form.Group controlId="formContent">
             <Form.Label>Contenu</Form.Label>

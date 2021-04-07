@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -18,11 +18,18 @@ function EditNoteModal() {
     removeNote,
   } = useNotesContext();
 
+  const titleInputRef = useRef(null);
+
   const show = displayStatus === "modifying";
 
   const initFields = () => {
     setTitle(selectedNote.title);
     setContent(selectedNote.content);
+
+    // Focusing on title input field
+    if (titleInputRef.current) {
+      titleInputRef.current.focus();
+    }
   };
 
   const cleanFields = () => {
@@ -54,15 +61,20 @@ function EditNoteModal() {
     <Modal
       show={show}
       onEnter={initFields}
-      onExited={cleanFields}
       onHide={handleModify}
+      onExited={cleanFields}
     >
       <Modal.Body>
         <h2 className="text-center mb-4">Modification</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formTitle">
             <Form.Label>Titre</Form.Label>
-            <Form.Control type="text" onChange={onChangeTitle} value={title} />
+            <Form.Control
+              type="text"
+              onChange={onChangeTitle}
+              value={title}
+              ref={titleInputRef}
+            />
           </Form.Group>
           <Form.Group controlId="formContent">
             <Form.Label>Contenu</Form.Label>

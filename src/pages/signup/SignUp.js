@@ -62,6 +62,7 @@ function SignUpForm() {
                     onChange={onChangeMail}
                     type="email"
                     placeholder="Saisissez votre adresse email"
+                    autoFocus
                   />
                   {errorId === "err_existing_user" ||
                   errorId === "err_invalid_mail" ? (

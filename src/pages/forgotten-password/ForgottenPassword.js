@@ -41,6 +41,7 @@ function ForgottenPassword() {
                     onChange={onChangeMail}
                     type="email"
                     placeholder="Saisissez votre adresse email"
+                    autoFocus
                   />
                 </Form.Group>
 
