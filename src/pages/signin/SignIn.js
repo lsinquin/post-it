@@ -45,9 +45,9 @@ function SignInForm() {
       <Row className="justify-content-center align-items-center h-100">
         <Col>
           <img
-            className="mx-auto d-block mb-5"
+            className="mx-auto d-block mb-sm-5 mb-3"
             src={logo}
-            width="300"
+            height="100"
             alt="logo"
           ></img>
           <Card className="form-card rounded-lg">
@@ -116,6 +116,7 @@ function SignInForm() {
               </Form>
             </Card.Body>
           </Card>
+          <div className="form-whitespace mt-sm-5 mt-3"></div>
         </Col>
       </Row>
     </Container>

@@ -47,9 +47,9 @@ function SignUpForm() {
       <Row className="justify-content-center align-items-center h-100">
         <Col>
           <img
-            className="mx-auto d-block mb-5"
+            className="mx-auto d-block mb-sm-5 mb-3"
             src={logo}
-            width="300"
+            height="100"
             alt="logo"
           ></img>
           <Card className="form-card rounded-lg">
@@ -115,16 +115,18 @@ function SignUpForm() {
               </Form>
             </Card.Body>
           </Card>
-          <Alert
-            className="mt-4"
-            show={accountCreated}
-            variant="success"
-            dismissible
-            onClose={onCloseAlert}
-          >
-            Votre compte a bien été créé. Vous pouvez &nbsp;
-            {<Link to="/signin">vous connecter</Link>}.
-          </Alert>
+          <div className="form-whitespace mt-sm-5 mt-3">
+            <Alert
+              className="mx-sm-4"
+              show={accountCreated}
+              variant="success"
+              dismissible
+              onClose={onCloseAlert}
+            >
+              Votre compte a bien été créé. Vous pouvez &nbsp;
+              {<Link to="/signin">vous connecter</Link>}.
+            </Alert>
+          </div>
         </Col>
       </Row>
     </Container>

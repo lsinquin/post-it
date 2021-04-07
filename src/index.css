@@ -35,7 +35,11 @@ code {
 
 .form-card {
   max-width: 450px;
-  margin: 0 auto 150px;
+  margin: 0 auto;
+}
+
+.form-whitespace {
+  height: 100px;
 }
 
 .input-form {

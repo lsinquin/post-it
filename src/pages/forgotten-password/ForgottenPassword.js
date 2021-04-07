@@ -26,7 +26,7 @@ function ForgottenPassword() {
       <Row className="justify-content-center align-items-center h-100">
         <Col>
           <img
-            className="mx-auto d-block mb-5"
+            className="mx-auto d-block mb-sm-5 mb-3"
             src={logo}
             width="300"
             alt="logo"
@@ -63,6 +63,7 @@ function ForgottenPassword() {
               </Form>
             </Card.Body>
           </Card>
+          <div className="form-whitespace mt-sm-5 mt-3"></div>
         </Col>
       </Row>
     </Container>
