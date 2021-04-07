@@ -47,7 +47,7 @@ function SignInForm() {
           <img
             className="mx-auto d-block mb-sm-5 mb-3"
             src={logo}
-            height="100"
+            height="75"
             alt="logo"
           ></img>
           <Card className="form-card rounded-lg">
