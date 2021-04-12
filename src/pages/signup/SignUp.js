@@ -121,7 +121,7 @@ function SignUpForm() {
           </Card>
           <div className="form-whitespace mt-sm-5 mt-3">
             <Alert
-              className="mx-sm-4"
+              className="alert-new-user mx-auto"
               show={accountCreated}
               variant="success"
               dismissible

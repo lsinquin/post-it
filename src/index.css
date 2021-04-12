@@ -224,3 +224,7 @@ code {
 .delete-button:hover {
   color: #8b1823;
 }
+
+.alert-new-user {
+  max-width: 600px;
+}
