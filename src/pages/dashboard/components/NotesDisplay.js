@@ -1,12 +1,19 @@
 import Note from "./Note";
 import Masonry from "react-masonry-css";
+import Spinner from "react-bootstrap/Spinner";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
 function NotesDisplay() {
   const { displayStatus, notes } = useNotesContext();
 
   if (displayStatus === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center h-100">
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      </div>
+    );
   }
 
   const breakpointCols = {
