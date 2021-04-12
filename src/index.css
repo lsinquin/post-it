@@ -62,7 +62,7 @@ code {
 }
 
 .header {
-  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  background-color: #f6d365;
   height: 50px;
 }
 
