@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useMediaQuery } from "react-responsive";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -21,6 +22,10 @@ function EditNoteModal() {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
+  const isBigScreen = useMediaQuery({
+    query: "(min-device-width: 992px)",
+  });
 
   const titleInputRef = useRef(null);
 
@@ -67,6 +72,7 @@ function EditNoteModal() {
       onEnter={initFields}
       onHide={handleModify}
       onExited={cleanFields}
+      centered={!isBigScreen}
     >
       <Modal.Body>
         <h2 className="text-center mb-4">Modification</h2>
@@ -86,7 +92,7 @@ function EditNoteModal() {
               as="textarea"
               value={content}
               onChange={onChangeContent}
-              rows={15}
+              rows={isBigScreen ? 15 : 10}
             />
           </Form.Group>
 

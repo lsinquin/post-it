@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useMediaQuery } from "react-responsive";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -10,6 +11,10 @@ import { useNotesContext } from "../contexts/notes/NotesContext";
 import useAutoFocus from "../../../hooks/useAutoFocus";
 
 function AddNoteModal() {
+  const isBigScreen = useMediaQuery({
+    query: "(min-device-width: 992px)",
+  });
+
   const { displayStatus, addNote, cancelCreateNote } = useNotesContext();
 
   const { autoFocus } = useAutoFocus();
@@ -55,6 +60,7 @@ function AddNoteModal() {
       onEnter={autoFocusTitleField}
       onHide={handleCancel}
       onExited={cleanFields}
+      centered={!isBigScreen}
     >
       <Modal.Body>
         <h2 className="text-center mb-4">Nouvelle note</h2>
@@ -74,7 +80,7 @@ function AddNoteModal() {
               as="textarea"
               value={content}
               onChange={onChangeContent}
-              rows={15}
+              rows={isBigScreen ? 15 : 8}
             />
           </Form.Group>
 
