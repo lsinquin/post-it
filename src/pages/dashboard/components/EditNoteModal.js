@@ -2,8 +2,6 @@ import { useState, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { FaTrash, FaCheck } from "react-icons/fa";
 import { useNotesContext } from "../contexts/notes/NotesContext";
@@ -96,16 +94,14 @@ function EditNoteModal() {
             />
           </Form.Group>
 
-          <Container>
-            <Row className="justify-content-end align-items-center">
-              <Button className="mr-2" onClick={handleDelete} variant="danger">
-                <FaTrash size={20} />
-              </Button>
-              <Button variant="primary" type="submit">
-                <FaCheck size={20} />
-              </Button>
-            </Row>
-          </Container>
+          <div className="d-flex justify-content-end align-items-center">
+            <Button className="mr-2" onClick={handleDelete} variant="danger">
+              <FaTrash size={20} />
+            </Button>
+            <Button variant="primary" type="submit">
+              <FaCheck size={20} />
+            </Button>
+          </div>
         </Form>
       </Modal.Body>
     </Modal>

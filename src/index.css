@@ -27,6 +27,10 @@ code {
   background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
 }
 
+.background {
+  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+}
+
 .paper-form {
   width: 450px;
   margin: auto;
@@ -35,7 +39,6 @@ code {
 
 .form-card {
   max-width: 450px;
-  margin: 0 auto;
 }
 
 .form-whitespace {

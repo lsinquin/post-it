@@ -2,8 +2,6 @@ import { useState, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { FaBan, FaCheck } from "react-icons/fa";
@@ -84,22 +82,20 @@ function AddNoteModal() {
             />
           </Form.Group>
 
-          <Container>
-            <Row className="justify-content-end align-items-center">
-              <Button className="mr-2" onClick={handleCancel} variant="danger">
-                <FaBan size={20} />
-              </Button>
-              <Button variant="primary" type="submit">
-                {isAdding ? (
-                  <Spinner as="span" size="sm" animation="border" role="status">
-                    <span className="sr-only">Loading...</span>
-                  </Spinner>
-                ) : (
-                  <FaCheck size={20} />
-                )}
-              </Button>
-            </Row>
-          </Container>
+          <div className="d-flex justify-content-end align-items-center">
+            <Button className="mr-2" onClick={handleCancel} variant="danger">
+              <FaBan size={20} />
+            </Button>
+            <Button variant="primary" type="submit">
+              {isAdding ? (
+                <Spinner as="span" size="sm" animation="border" role="status">
+                  <span className="sr-only">Loading...</span>
+                </Spinner>
+              ) : (
+                <FaCheck size={20} />
+              )}
+            </Button>
+          </div>
         </Form>
       </Modal.Body>
     </Modal>
