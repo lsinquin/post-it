@@ -64,13 +64,14 @@ function SignInForm() {
                     type="email"
                     placeholder="Saisissez votre adresse email"
                     autoFocus={autoFocus}
+                    isInvalid={
+                      errorId === "err_no_user_found" ||
+                      errorId === "err_invalid_mail"
+                    }
                   />
-                  {errorId === "err_no_user_found" ||
-                  errorId === "err_invalid_mail" ? (
-                    <Form.Text id="passwordHelpBlock" className="text-danger">
-                      {errorMessage}
-                    </Form.Text>
-                  ) : null}
+                  <Form.Control.Feedback type="invalid">
+                    {errorMessage}
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="formPassword">
@@ -79,12 +80,11 @@ function SignInForm() {
                     onChange={onChangePassword}
                     type="password"
                     placeholder="Saisissez votre mot de passe"
+                    isInvalid={errorId === "err_wrong_credentials"}
                   />
-                  {errorId === "err_wrong_credentials" ? (
-                    <Form.Text id="passwordHelpBlock" className="text-danger">
-                      {errorMessage}
-                    </Form.Text>
-                  ) : null}
+                  <Form.Control.Feedback type="invalid">
+                    {errorMessage}
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Button

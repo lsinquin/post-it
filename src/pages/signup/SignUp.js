@@ -66,13 +66,14 @@ function SignUpForm() {
                     type="email"
                     placeholder="Saisissez votre adresse email"
                     autoFocus={autoFocus}
+                    isInvalid={
+                      errorId === "err_existing_user" ||
+                      errorId === "err_invalid_mail"
+                    }
                   />
-                  {errorId === "err_existing_user" ||
-                  errorId === "err_invalid_mail" ? (
-                    <Form.Text id="passwordHelpBlock" className="text-danger">
-                      {errorMessage}
-                    </Form.Text>
-                  ) : null}
+                  <Form.Control.Feedback type="invalid">
+                    {errorMessage}
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="formPassword">
@@ -81,12 +82,11 @@ function SignUpForm() {
                     onChange={onChangePassword}
                     type="password"
                     placeholder="Saisissez votre mot de passe"
+                    isInvalid={errorId === "err_invalid_password"}
                   />
-                  {errorId === "err_invalid_password" ? (
-                    <Form.Text id="passwordHelpBlock" className="text-danger">
-                      {errorMessage}
-                    </Form.Text>
-                  ) : null}
+                  <Form.Control.Feedback type="invalid">
+                    {errorMessage}
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Button
