@@ -10,6 +10,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import logo from "../../logo.svg";
 import useSignUp from "./hooks/useSignUp";
+import useAutoFocus from "../../hooks/useAutoFocus";
 
 function SignUpForm() {
   const {
@@ -20,6 +21,8 @@ function SignUpForm() {
     signUp,
     setAccountCreated,
   } = useSignUp();
+
+  const { autoFocus } = useAutoFocus();
 
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -62,7 +65,7 @@ function SignUpForm() {
                     onChange={onChangeMail}
                     type="email"
                     placeholder="Saisissez votre adresse email"
-                    autoFocus
+                    autoFocus={autoFocus}
                   />
                   {errorId === "err_existing_user" ||
                   errorId === "err_invalid_mail" ? (

@@ -6,10 +6,9 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { FaTrash, FaCheck } from "react-icons/fa";
 import { useNotesContext } from "../contexts/notes/NotesContext";
+import useAutoFocus from "../../../hooks/useAutoFocus";
 
 function EditNoteModal() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
   const {
     displayStatus,
     selectedNote,
@@ -17,6 +16,11 @@ function EditNoteModal() {
     modifyNote,
     removeNote,
   } = useNotesContext();
+
+  const { autoFocus } = useAutoFocus();
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const titleInputRef = useRef(null);
 
@@ -27,7 +31,7 @@ function EditNoteModal() {
     setContent(selectedNote.content);
 
     // Focusing on title input field
-    if (titleInputRef.current) {
+    if (autoFocus && titleInputRef.current) {
       titleInputRef.current.focus();
     }
   };

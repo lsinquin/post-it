@@ -7,8 +7,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import logo from "../../logo.svg";
+import useAutoFocus from "../../hooks/useAutoFocus";
 
 function ForgottenPassword() {
+  const { autoFocus } = useAutoFocus();
+
   const [mail, setMail] = useState("");
 
   const handleSubmit = async (event) => {
@@ -41,7 +44,7 @@ function ForgottenPassword() {
                     onChange={onChangeMail}
                     type="email"
                     placeholder="Saisissez votre adresse email"
-                    autoFocus
+                    autoFocus={autoFocus}
                   />
                 </Form.Group>
 

@@ -7,19 +7,25 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { FaBan, FaCheck } from "react-icons/fa";
 import { useNotesContext } from "../contexts/notes/NotesContext";
+import useAutoFocus from "../../../hooks/useAutoFocus";
 
 function AddNoteModal() {
+  const { displayStatus, addNote, cancelCreateNote } = useNotesContext();
+
+  const { autoFocus } = useAutoFocus();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isAdding, setIsAdding] = useState(false);
-  const { displayStatus, addNote, cancelCreateNote } = useNotesContext();
 
   const titleInputRef = useRef(null);
 
   const show = displayStatus === "adding";
 
-  const focusTitleField = () => {
-    titleInputRef.current.focus();
+  const autoFocusTitleField = () => {
+    if (autoFocus) {
+      titleInputRef.current.focus();
+    }
   };
 
   const cleanFields = () => {
@@ -46,7 +52,7 @@ function AddNoteModal() {
   return (
     <Modal
       show={show}
-      onEnter={focusTitleField}
+      onEnter={autoFocusTitleField}
       onHide={handleCancel}
       onExited={cleanFields}
     >

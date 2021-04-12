@@ -9,6 +9,7 @@ import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 import logo from "../../logo.svg";
 import useSignIn from "./hooks/useSignIn";
+import useAutoFocus from "../../hooks/useAutoFocus";
 
 function SignInForm() {
   const {
@@ -18,6 +19,8 @@ function SignInForm() {
     errorMessage,
     signIn,
   } = useSignIn();
+
+  const { autoFocus } = useAutoFocus();
 
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,7 +63,7 @@ function SignInForm() {
                     onChange={onChangeMail}
                     type="email"
                     placeholder="Saisissez votre adresse email"
-                    autoFocus
+                    autoFocus={autoFocus}
                   />
                   {errorId === "err_no_user_found" ||
                   errorId === "err_invalid_mail" ? (
