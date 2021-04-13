@@ -26,6 +26,10 @@ body,
   height: 75px;
 }
 
+.dashboard {
+  min-height: 100%;
+}
+
 .header {
   background-color: #f6d365;
   height: 50px;

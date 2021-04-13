@@ -8,14 +8,16 @@ import { NotesProvider } from "./contexts/notes/NotesContext";
 
 function Dashboard() {
   return (
-    <NotesProvider>
-      <Header />
-      <NotesDisplay />
-      <FloatingAddButton />
-      <AddNoteModal />
-      <EditNoteModal />
-      <ErrorModal />
-    </NotesProvider>
+    <div className="dashboard">
+      <NotesProvider>
+        <Header />
+        <NotesDisplay />
+        <FloatingAddButton />
+        <AddNoteModal />
+        <EditNoteModal />
+        <ErrorModal />
+      </NotesProvider>
+    </div>
   );
 }
 
