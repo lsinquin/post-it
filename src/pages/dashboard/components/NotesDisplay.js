@@ -28,7 +28,7 @@ function NotesDisplay() {
     <Masonry
       breakpointCols={breakpointCols}
       className="my-masonry-grid p-4 m-2"
-      columnClassName="my-masonry-grid_column"
+      columnClassName="my-masonry-grid-column"
     >
       {notes.map((note) => {
         return <Note key={note.id} note={note} />;

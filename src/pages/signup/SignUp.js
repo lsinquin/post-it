@@ -46,9 +46,9 @@ function SignUpForm() {
   };
 
   return (
-    <div className="background d-flex flex-column justify-content-center align-items-center h-100 p-3">
+    <div className="d-flex flex-column justify-content-center align-items-center bg-gradient h-100 p-3">
       <img className="mb-sm-5 mb-3" src={logo} height="75" alt="logo" />
-      <Card className="form-card rounded-lg w-100">
+      <Card className="card-form rounded-lg w-100">
         <Card.Body className="p-4">
           <h3 className="text-center mb-4">Nouveau compte</h3>
           <Form onSubmit={handleSubmit}>
@@ -107,7 +107,7 @@ function SignUpForm() {
           </Form>
         </Card.Body>
       </Card>
-      <div className="form-whitespace mt-sm-5 mt-3">
+      <div className="whitespace mt-sm-5 mt-3">
         <Alert
           className="alert-new-user mx-auto"
           show={accountCreated}
