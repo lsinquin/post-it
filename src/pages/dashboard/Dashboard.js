@@ -8,7 +8,7 @@ import { NotesProvider } from "./contexts/notes/NotesContext";
 
 function Dashboard() {
   return (
-    <div className="dashboard">
+    <div className="dashboard bg-white">
       <NotesProvider>
         <Header />
         <NotesDisplay />
