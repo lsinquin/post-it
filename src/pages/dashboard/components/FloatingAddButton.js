@@ -10,7 +10,7 @@ function FloatingAddButton() {
 
   return (
     <FaPlusCircle
-      className="floating-add-button"
+      className="floating-add-button bg-white"
       size={64}
       onClick={handleAddNote}
     />
