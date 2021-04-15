@@ -72,12 +72,13 @@ body {
   position: fixed;
   right: 15px;
   bottom: 15px;
-  color: #fda085;
   cursor: pointer;
+  color: #fc734c;
+  clip-path: circle(50%);
 }
 
 .floating-add-button:hover {
-  color: #fb6439;
+  color: #fb4d1b;
 }
 
 .my-masonry-grid {
