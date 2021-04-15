@@ -50,8 +50,7 @@ body {
 }
 
 .note {
-  min-height: 90px;
-  margin-bottom: 16px;
+  min-height: 100px;
   cursor: pointer;
   border-radius: 8px !important;
 }
@@ -89,12 +88,11 @@ body {
 }
 
 .my-masonry-grid-column {
-  padding-left: 16px; /* gutter size */
   background-clip: padding-box;
 }
 
 .my-masonry-grid-column:first-child {
-  padding-left: 0px;
+  padding-left: 0px !important;
 }
 
 .delete-button:hover {

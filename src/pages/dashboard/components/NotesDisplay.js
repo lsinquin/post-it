@@ -8,7 +8,7 @@ function NotesDisplay() {
 
   if (displayStatus === "loading") {
     return (
-      <div className="d-flex justify-content-center align-items-center h-100">
+      <div className="d-flex justify-content-center mt-5">
         <Spinner animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner>
@@ -18,17 +18,18 @@ function NotesDisplay() {
 
   const breakpointCols = {
     default: 6,
-    1200: 5,
-    992: 4,
-    768: 3,
-    576: 2,
+    1500: 5,
+    1250: 4,
+    1000: 3,
+    750: 2,
+    500: 1,
   };
 
   return (
     <Masonry
       breakpointCols={breakpointCols}
-      className="my-masonry-grid p-4 m-2"
-      columnClassName="my-masonry-grid-column"
+      className="my-masonry-grid p-3 p-xl-4"
+      columnClassName="my-masonry-grid-column pl-3 pl-xl-4"
     >
       {notes.map((note) => {
         return <Note key={note.id} note={note} />;

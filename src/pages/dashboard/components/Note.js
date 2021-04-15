@@ -22,7 +22,7 @@ function Note({ note }) {
 
   return (
     <Card
-      className="note w-100"
+      className="note w-100 mb-3 mb-xl-4"
       onClick={handleClick}
       onMouseEnter={handleShowFloatingButton}
       onMouseLeave={handleUnshowFloatingButton}
