@@ -10,7 +10,7 @@ import useAutoFocus from "../../../hooks/useAutoFocus";
 
 function AddNoteModal() {
   const isBigScreen = useMediaQuery({
-    query: "(min-device-width: 992px)",
+    query: "(min-device-width: 768px)",
   });
 
   const { displayStatus, addNote, cancelCreateNote } = useNotesContext();
