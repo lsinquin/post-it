@@ -21,10 +21,9 @@ function NotesProvider({ children }) {
     addNote,
     modifyNote,
     removeNote,
-    createNoteModal,
+    startCreateNote,
     cancelCreateNote,
     selectNote,
-    unselectNote,
   } = useNotesDataManager();
 
   const provider = {
@@ -36,10 +35,9 @@ function NotesProvider({ children }) {
     addNote,
     modifyNote,
     removeNote,
-    createNoteModal,
+    startCreateNote,
     cancelCreateNote,
     selectNote,
-    unselectNote,
   };
 
   return (

@@ -14,7 +14,7 @@ function Note({ note }) {
   const handleDelete = (event) => {
     event.stopPropagation();
 
-    removeNote(note.id);
+    removeNote(note.id, true);
   };
 
   const handleShowFloatingButton = () => setShowDeleteButton(true);

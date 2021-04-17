@@ -84,15 +84,30 @@ function AddNoteModal() {
 
           <div className="d-flex justify-content-end align-items-center">
             <Button className="mr-2" onClick={handleCancel} variant="danger">
-              <FaBan size={20} />
+              <>
+                <FaBan className="mr-1" size={20} />
+                Annuler
+              </>
             </Button>
             <Button variant="primary" type="submit">
               {isAdding ? (
-                <Spinner as="span" size="sm" animation="border" role="status">
-                  <span className="sr-only">Loading...</span>
-                </Spinner>
+                <>
+                  <Spinner
+                    className="mr-1"
+                    as="span"
+                    size="sm"
+                    animation="border"
+                    role="status"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                  En cours
+                </>
               ) : (
-                <FaCheck size={20} />
+                <>
+                  <FaCheck className="mr-1" size={20} />
+                  Valider
+                </>
               )}
             </Button>
           </div>

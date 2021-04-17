@@ -3,15 +3,19 @@ import { useMediaQuery } from "react-responsive";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 import { FaTrash, FaCheck } from "react-icons/fa";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 import useAutoFocus from "../../../hooks/useAutoFocus";
 
 function EditNoteModal() {
+  const isBigScreen = useMediaQuery({
+    query: "(min-device-width: 992px)",
+  });
+
   const {
     displayStatus,
     selectedNote,
-    unselectNote,
     modifyNote,
     removeNote,
   } = useNotesContext();
@@ -20,14 +24,11 @@ function EditNoteModal() {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
-  const isBigScreen = useMediaQuery({
-    query: "(min-device-width: 992px)",
-  });
+  const [currentAction, setCurrentAction] = useState(null);
 
   const titleInputRef = useRef(null);
 
-  const show = displayStatus === "modifying";
+  const show = displayStatus === "editing";
 
   const initFields = () => {
     setTitle(selectedNote.title);
@@ -42,6 +43,7 @@ function EditNoteModal() {
   const cleanFields = () => {
     setTitle("");
     setContent("");
+    setCurrentAction(null);
   };
 
   const onChangeTitle = (event) => setTitle(event.target.value);
@@ -54,14 +56,14 @@ function EditNoteModal() {
     handleModify();
   };
 
-  const handleModify = () => {
+  const handleModify = (event) => {
+    setCurrentAction("modifying");
     modifyNote(selectedNote.id, title, content);
-    unselectNote();
   };
 
-  const handleDelete = () => {
+  const handleDelete = (event) => {
+    setCurrentAction("deleting");
     removeNote(selectedNote.id);
-    unselectNote();
   };
 
   return (
@@ -96,10 +98,46 @@ function EditNoteModal() {
 
           <div className="d-flex justify-content-end align-items-center">
             <Button className="mr-2" onClick={handleDelete} variant="danger">
-              <FaTrash size={20} />
+              {currentAction === "deleting" ? (
+                <>
+                  <Spinner
+                    className="mr-1"
+                    as="span"
+                    size="sm"
+                    animation="border"
+                    role="status"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                  En cours
+                </>
+              ) : (
+                <>
+                  <FaTrash className="mr-1" size={20} />
+                  Supprimer
+                </>
+              )}
             </Button>
             <Button variant="primary" type="submit">
-              <FaCheck size={20} />
+              {currentAction === "modifying" ? (
+                <>
+                  <Spinner
+                    className="mr-1"
+                    as="span"
+                    size="sm"
+                    animation="border"
+                    role="status"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                  En cours
+                </>
+              ) : (
+                <>
+                  <FaCheck className="mr-1" size={20} />
+                  Valider
+                </>
+              )}
             </Button>
           </div>
         </Form>

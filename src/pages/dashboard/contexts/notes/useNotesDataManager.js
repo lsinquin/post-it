@@ -9,7 +9,7 @@ import notesReducer from "./notesReducer";
 import { useAuthContext } from "../../../../contexts/auth/AuthContext";
 import backgroundRequestDataReducer from "./backgroundRequestDataReducer";
 
-// const displayValues = ["loading", "displaying", "adding", "modifying"];
+// const displayValues = ["loading", "displaying", "adding", "editing"];
 
 function useNotesDataManager() {
   const { authToken } = useAuthContext();
@@ -47,9 +47,9 @@ function useNotesDataManager() {
 
       const { data: note } = await postNewNote(title, content, authToken);
 
-      setDisplayStatus("displaying");
       dispatchNotes({ type: "ADD_NOTE", payload: note });
       dispatchRequest({ type: "REQUEST_SUCCESS" });
+      setDisplayStatus("displaying");
     } catch (error) {
       console.log(error);
 
@@ -61,14 +61,19 @@ function useNotesDataManager() {
     try {
       dispatchRequest({ type: "REQUEST_START" });
 
+      const { data: modifiedNote } = await putNote(
+        noteId,
+        title,
+        content,
+        authToken
+      );
+
       dispatchNotes({
         type: "MODIFY_NOTE",
-        payload: { id: noteId, title, content },
+        payload: modifiedNote,
       });
-
-      await putNote(noteId, title, content, authToken);
-
       dispatchRequest({ type: "REQUEST_SUCCESS" });
+      setDisplayStatus("displaying");
     } catch (error) {
       console.log(error);
 
@@ -76,15 +81,18 @@ function useNotesDataManager() {
     }
   };
 
-  const removeNote = async (noteId) => {
+  const removeNote = async (noteId, inBackground = false) => {
     try {
       dispatchRequest({ type: "REQUEST_START" });
 
-      dispatchNotes({ type: "REMOVE_NOTE", payload: { id: noteId } });
-
       await deleteNote(noteId, authToken);
 
+      dispatchNotes({ type: "REMOVE_NOTE", payload: { id: noteId } });
       dispatchRequest({ type: "REQUEST_SUCCESS" });
+
+      if (!inBackground) {
+        setDisplayStatus("displaying");
+      }
     } catch (error) {
       console.log(error);
 
@@ -92,7 +100,7 @@ function useNotesDataManager() {
     }
   };
 
-  const createNoteModal = () => {
+  const startCreateNote = () => {
     setDisplayStatus("adding");
   };
 
@@ -103,13 +111,8 @@ function useNotesDataManager() {
   const selectNote = (noteId) => {
     const note = notes.find((e) => e.id === noteId);
 
-    setDisplayStatus("modifying");
+    setDisplayStatus("editing");
     setSelectedNote(note);
-  };
-
-  const unselectNote = () => {
-    setDisplayStatus("displaying");
-    setSelectedNote(null);
   };
 
   return {
@@ -121,10 +124,9 @@ function useNotesDataManager() {
     addNote,
     modifyNote,
     removeNote,
-    createNoteModal,
+    startCreateNote,
     cancelCreateNote,
     selectNote,
-    unselectNote,
   };
 }
 

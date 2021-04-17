@@ -46,7 +46,7 @@ function UserDropdown() {
         </Dropdown.Toggle>
       ) : (
         <Dropdown.Toggle as={IconToogle} id="dropdown-custom-components">
-          <FaUserCircle size={32} />
+          <FaUserCircle size={36} />
         </Dropdown.Toggle>
       )}
 

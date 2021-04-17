@@ -2,10 +2,10 @@ import { FaPlusCircle } from "react-icons/fa";
 import { useNotesContext } from "../contexts/notes/NotesContext";
 
 function FloatingAddButton() {
-  const { createNoteModal } = useNotesContext();
+  const { startCreateNote } = useNotesContext();
 
   const handleAddNote = () => {
-    createNoteModal();
+    startCreateNote();
   };
 
   return (
