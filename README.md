@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# Post-It
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Post-It est une web-app responsive de gestion de notes fortement inspiré de [Google Keep](https://keep.google.com/).
+Elle a été développée dans le but de mettre en pratique des connaissances acquises sur l'écosystème React à travers des MOOCs.
 
-## Available Scripts
+La web app permet de :
 
-In the project directory, you can run:
+- Créer un compte
+- Se connecter
+- Créer une nouvelle note
+- Modifier une note existante
+- Supprimer une note
 
-### `yarn start`
+La web app se base sur [l'API Post-It](https://github.com/lsinquin/post-it-api) pour persister les données de chaque utilisateur.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Status
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+La web est dans un état fonctionnel minimal. De nombreuses fonctionnalités sont encore à ajouter parmi lesquelles :
 
-### `yarn test`
+- Drag & Drop des notes
+- Permettre la connexion à partir d'un compte Google, Facebook, etc..
+- Modification optimiste sans attendre le retour de l'API pour fluidifier l'expérience utilisateur. Rollback en cas d'erreur.
+- Permettre de choisir une couleur pour chaque note.
+- Modification du mot de passe d'un compte.
+- Implémentation de l'écran de mot de passe oublié.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Démo
 
-### `yarn build`
+Le web app est hébergée sur [Netlify](https://trusting-gates-880974.netlify.app/).  
+Le compte suivant de démonstration peut être utilisé pour découvrir l'application sans créer de compte :
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- mail : demo@postit.fr
+- mot de passe : postit123
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+L'API Post-It est quant à elle hébergée sur [heroku](https://post-it-api.herokuapp.com/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technologies
 
-### `yarn eject`
+La web app utilise React pour définir les interfaces graphiques. Le choix a été fait d'utiliser massivement les functional components et d'utiliser les hooks pour gérer les états et les effets de bords.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Ce projet a été initialisé et configuré grâce à [CRA (Create React App)](https://create-react-app.dev/docs/getting-started/)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+La librairie de composants [React Bootstrap](https://react-bootstrap.github.io/) a été utilisée. En plus des composants offerts par React Bootstrap, [Bootstrap (V4)](https://getbootstrap.com/docs/4.6/getting-started/introduction/) a été utilisé afin de pouvoir utiliser ses nombreuses classes utilitaires. Vu la simplicité des écrans de l'application, le système de Grid de Bootstrap a été très peu utilisé au profit de l'utilisation généralisée de flexbox.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+[Axios](https://axios-http.com/) a été priviligié pour faire les appels à l'API.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Les icônes de l'application sont toutes issues de [react-icons](https://react-icons.github.io/react-icons/).
 
-## Learn More
+L'affichage des notes est gérée par le module [react-masonry-css](https://www.npmjs.com/package/react-masonry-css), implémentation optimisé pour React du principe de masonry qui optimise le placement d'éléments en fonction de leur hauteur et de l'espace vertical disponible.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Gestion d'état
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Le choix a été fait au début du projet de ne pas utiliser de bibliothèque de gestion d'état. La compléxité du projet ne me semblait pas nécéssité l'utilisation d'une telle bibliothèque et ça permettait de se concentrer sur l'apprentissage de React.
 
-### Code Splitting
+Les états locaux, spécifiques à un composant ont été extraits dans des [custom hooks](https://fr.reactjs.org/docs/hooks-custom.html) quand ils devenaient trop imposant pour réduire au maximum la définition des composants aux aspects graphiques
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Un [custom hook](https://fr.reactjs.org/docs/hooks-custom.html) de gestion des informations de l'utilisateur s'interfaçant avec l'API Post-It pour se connecter est rendu global à toute l'application grâce à l'utlisation d'un [Contexte React](https://fr.reactjs.org/docs/context.html).
 
-### Analyzing the Bundle Size
+Un [custom hook](https://fr.reactjs.org/docs/hooks-custom.html) est dédié à la gestion des notes d'un utilisateur. Celui-ci s'initialise avec les informations de l'API puis permet de créer, modifier et supprimer une note en s'interfaçant avec l'API Post-It. Ce custom hook est rendu accessible à tous les composants de l'écran d'affichage des notes (visible ci-dessous) grâce à l'utilisation d'un [Contexte React](https://fr.reactjs.org/docs/context.html). L'utilisation d'un Contexte n'était pas nécessaire dans ce cas étant donné la faible compléxité de l'arbre de composants de cette écran. Cela permettait cependant de se familiariser avec cette nouvelle fonctionnalité de React.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![Screenshot de l'écran d'affichage des notes](dashboard.png)
 
-### Making a Progressive Web App
+Ce choix de ne pas utiliser de bibliothèque bien qu'enrichissant a rapidement rendu la gestion des états fastidieuse. Si c'était à refaire, je choisirais une solution plus structurée et éprouvée comme [Redux](https://redux.js.org/) ou je privilégierais une solution comme [react-query](https://react-query.tanstack.com/) pour simplifier l'interfaçage avec l'API Post-It.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Installation
 
-### Advanced Configuration
+Pour utiliser la web app en local, yarn est nécessaire.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Après avoir cloné le dépôt Git. Tapez la commande suivante pour installer les dépendances :
 
-### Deployment
+`yarn`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Pour lancer l'application, tapez la commande :
 
-### `yarn build` fails to minify
+`yarn start`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Pour bundle l'application, il suffit de taper la commande :
+
+`yarn build`
